@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import CategoryManager from '../CategoryManager/CategoryManager'
+import ExportMenu from '../ImportExport/ExportMenu'
+import ImportButton from '../ImportExport/ImportButton'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
 
 function Toolbar() {
@@ -38,6 +40,8 @@ function Toolbar() {
         >
           Catégories
         </button>
+        <ImportButton />
+        <ExportMenu />
       </div>
 
       {isAddingMod && (
