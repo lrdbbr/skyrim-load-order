@@ -1,6 +1,8 @@
+import type { DragEndEvent } from '@dnd-kit/core'
 import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import ModList from './ModList'
+import { getReorderedModIds } from '../../lib/dragAndDrop'
 import {
   initialLoadOrderState,
   useLoadOrderStore,
@@ -56,5 +58,30 @@ describe('ModList', () => {
     render(<ModList />)
 
     expect(screen.getByText('Sans catégorie')).toBeInTheDocument()
+  })
+})
+
+describe('ModList drag and drop', () => {
+  it('reorders real mods in the store using the recomputed order from onDragEnd', () => {
+    useLoadOrderStore.getState().addMod('Mod A')
+    useLoadOrderStore.getState().addMod('Mod B')
+    useLoadOrderStore.getState().addMod('Mod C')
+    const [modA, modB, modC] = useLoadOrderStore.getState().mods
+
+    const newOrder = getReorderedModIds([modA.id, modB.id, modC.id], {
+      active: { id: modC.id },
+      over: { id: modA.id },
+    } as DragEndEvent)
+
+    expect(newOrder).toEqual([modC.id, modA.id, modB.id])
+
+    if (newOrder) useLoadOrderStore.getState().reorderMods(newOrder)
+
+    const positionById = new Map(
+      useLoadOrderStore.getState().mods.map((mod) => [mod.id, mod.position]),
+    )
+    expect(positionById.get(modC.id)).toBe(0)
+    expect(positionById.get(modA.id)).toBe(1)
+    expect(positionById.get(modB.id)).toBe(2)
   })
 })

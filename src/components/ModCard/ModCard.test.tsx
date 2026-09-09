@@ -1,3 +1,5 @@
+import { DndContext } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import ModCard from './ModCard'
@@ -24,6 +26,18 @@ const gameplayCategory: Category = {
   order: 0,
 }
 
+function renderModCard(mod: Mod, category: Category | undefined) {
+  return render(
+    <DndContext>
+      <SortableContext items={[mod.id]} strategy={verticalListSortingStrategy}>
+        <ul>
+          <ModCard mod={mod} category={category} />
+        </ul>
+      </SortableContext>
+    </DndContext>,
+  )
+}
+
 beforeEach(() => {
   useLoadOrderStore.setState(structuredClone(initialLoadOrderState))
   window.localStorage.clear()
@@ -31,13 +45,13 @@ beforeEach(() => {
 
 describe('ModCard', () => {
   it('renders the mod name', () => {
-    render(<ModCard mod={baseMod} category={undefined} />)
+    renderModCard(baseMod, undefined)
 
     expect(screen.getByText('Ordinator - Perks of Skyrim')).toBeInTheDocument()
   })
 
   it('shows "Sans catégorie" in gray when the mod has no category', () => {
-    render(<ModCard mod={baseMod} category={undefined} />)
+    renderModCard(baseMod, undefined)
 
     const badge = screen.getByText('Sans catégorie')
     expect(badge).toBeInTheDocument()
@@ -45,11 +59,9 @@ describe('ModCard', () => {
   })
 
   it('shows the category badge with its name and color', () => {
-    render(
-      <ModCard
-        mod={{ ...baseMod, categoryId: gameplayCategory.id }}
-        category={gameplayCategory}
-      />,
+    renderModCard(
+      { ...baseMod, categoryId: gameplayCategory.id },
+      gameplayCategory,
     )
 
     const badge = screen.getByText('Gameplay')
@@ -57,18 +69,28 @@ describe('ModCard', () => {
     expect(badge).toHaveStyle({ backgroundColor: '#ff0000' })
   })
 
+  it('exposes a dedicated drag handle separate from the toggle button', () => {
+    renderModCard(baseMod, undefined)
+
+    expect(
+      screen.getByRole('button', {
+        name: `Réordonner ${baseMod.name}`,
+      }),
+    ).toBeInTheDocument()
+  })
+
   it('is collapsed by default and does not show the details section', () => {
-    render(<ModCard mod={baseMod} category={undefined} />)
+    renderModCard(baseMod, undefined)
 
     expect(screen.queryByLabelText(/description/i)).not.toBeInTheDocument()
     expect(screen.getByRole('button', { expanded: false })).toBeInTheDocument()
   })
 
   it('toggles the details section when the card header is clicked', () => {
-    render(<ModCard mod={baseMod} category={undefined} />)
+    renderModCard(baseMod, undefined)
 
     const toggle = screen.getByRole('button', {
-      name: /Ordinator - Perks of Skyrim/i,
+      name: /^Ordinator - Perks of Skyrim/i,
     })
 
     fireEvent.click(toggle)
