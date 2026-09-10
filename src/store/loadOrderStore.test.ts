@@ -131,6 +131,30 @@ describe('updateCategory', () => {
   })
 })
 
+describe('resetAll', () => {
+  it('clears all mods and categories', () => {
+    useLoadOrderStore.getState().addCategory('Gameplay', '#ff0000')
+    useLoadOrderStore.getState().addMod('Mod A')
+    useLoadOrderStore.getState().addMod('Mod B')
+
+    useLoadOrderStore.getState().resetAll()
+
+    const state = useLoadOrderStore.getState()
+    expect(state.mods).toHaveLength(0)
+    expect(state.categories).toHaveLength(0)
+  })
+
+  it('refreshes meta.lastModified', async () => {
+    useLoadOrderStore.getState().addMod('Mod A')
+    const before = useLoadOrderStore.getState().meta.lastModified
+
+    await new Promise((resolve) => setTimeout(resolve, 5))
+    useLoadOrderStore.getState().resetAll()
+
+    expect(useLoadOrderStore.getState().meta.lastModified).not.toBe(before)
+  })
+})
+
 describe('removeCategory', () => {
   it('removes the category and clears categoryId on affected mods', () => {
     useLoadOrderStore.getState().addCategory('Gameplay', '#ff0000')

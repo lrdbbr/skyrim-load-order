@@ -1,5 +1,6 @@
 import ModList from './components/ModList/ModList'
 import Toolbar from './components/Toolbar/Toolbar'
+import SessionRestoredNotice from './components/Toolbar/SessionRestoredNotice'
 
 function App() {
   return (
@@ -8,6 +9,8 @@ function App() {
         <h1 className="text-2xl font-semibold sm:text-3xl">
           Skyrim Load Order
         </h1>
+
+        <SessionRestoredNotice />
 
         <Toolbar />
 

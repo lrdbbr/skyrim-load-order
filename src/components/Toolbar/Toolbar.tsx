@@ -3,12 +3,15 @@ import CategoryManager from '../CategoryManager/CategoryManager'
 import ExportMenu from '../ImportExport/ExportMenu'
 import ImportButton from '../ImportExport/ImportButton'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
+import SaveIndicator from './SaveIndicator'
+import ResetConfirmModal from './ResetConfirmModal'
 
 function Toolbar() {
   const addMod = useLoadOrderStore((state) => state.addMod)
   const [isAddingMod, setIsAddingMod] = useState(false)
   const [modName, setModName] = useState('')
   const [isCategoryManagerOpen, setIsCategoryManagerOpen] = useState(false)
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false)
 
   const cancelAddMod = () => {
     setIsAddingMod(false)
@@ -25,7 +28,7 @@ function Toolbar() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => setIsAddingMod(true)}
@@ -42,6 +45,16 @@ function Toolbar() {
         </button>
         <ImportButton />
         <ExportMenu />
+        <button
+          type="button"
+          onClick={() => setIsResetModalOpen(true)}
+          className="rounded-lg border border-red-900 px-4 py-2.5 text-sm font-medium text-red-300"
+        >
+          Réinitialiser
+        </button>
+        <span className="ml-auto">
+          <SaveIndicator />
+        </span>
       </div>
 
       {isAddingMod && (
@@ -77,6 +90,10 @@ function Toolbar() {
 
       {isCategoryManagerOpen && (
         <CategoryManager onClose={() => setIsCategoryManagerOpen(false)} />
+      )}
+
+      {isResetModalOpen && (
+        <ResetConfirmModal onClose={() => setIsResetModalOpen(false)} />
       )}
     </div>
   )

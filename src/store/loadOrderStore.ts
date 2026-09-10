@@ -2,8 +2,15 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { v4 as uuidv4 } from 'uuid'
 import type { Category, LoadOrderState, Mod } from './types'
+import {
+  hasPersistedData,
+  isLocalStorageAvailable,
+  onStorageWriteError,
+  safeJsonStorage,
+} from '../lib/storage'
 
 const SCHEMA_VERSION = 1
+const STORAGE_KEY = 'skyrim-load-order:v1'
 
 export const initialLoadOrderState: LoadOrderState = {
   mods: [],
@@ -12,6 +19,17 @@ export const initialLoadOrderState: LoadOrderState = {
     schemaVersion: SCHEMA_VERSION,
     lastModified: new Date(0).toISOString(),
   },
+}
+
+/**
+ * Calculé une seule fois au chargement du module, avant toute hydratation
+ * du store : sert à afficher le message "Session précédente restaurée".
+ */
+export const hadPersistedDataOnLoad = hasPersistedData(STORAGE_KEY)
+
+interface StorageStatus {
+  storageAvailable: boolean
+  storageWriteError: boolean
 }
 
 interface LoadOrderActions {
@@ -28,9 +46,10 @@ interface LoadOrderActions {
     changes: Partial<Pick<Category, 'name' | 'color'>>,
   ) => void
   removeCategory: (id: string) => void
+  resetAll: () => void
 }
 
-export type LoadOrderStore = LoadOrderState & LoadOrderActions
+export type LoadOrderStore = LoadOrderState & StorageStatus & LoadOrderActions
 
 function touch(): LoadOrderState['meta'] {
   return {
@@ -43,6 +62,8 @@ export const useLoadOrderStore = create<LoadOrderStore>()(
   persist(
     (set) => ({
       ...initialLoadOrderState,
+      storageAvailable: isLocalStorageAvailable,
+      storageWriteError: false,
 
       addMod: (name) =>
         set((state) => {
@@ -127,9 +148,17 @@ export const useLoadOrderStore = create<LoadOrderStore>()(
           ),
           meta: touch(),
         })),
+
+      resetAll: () =>
+        set(() => ({
+          mods: [],
+          categories: [],
+          meta: touch(),
+        })),
     }),
     {
-      name: 'skyrim-load-order:v1',
+      name: STORAGE_KEY,
+      storage: safeJsonStorage,
       partialize: (state) => ({
         mods: state.mods,
         categories: state.categories,
@@ -138,3 +167,7 @@ export const useLoadOrderStore = create<LoadOrderStore>()(
     },
   ),
 )
+
+onStorageWriteError(() => {
+  useLoadOrderStore.setState({ storageWriteError: true })
+})
