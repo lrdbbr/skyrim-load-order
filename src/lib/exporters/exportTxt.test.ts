@@ -8,6 +8,7 @@ function makeMod(
   return {
     description: '',
     categoryId: null,
+    disabled: false,
     createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: '2026-01-01T00:00:00.000Z',
     ...overrides,
@@ -26,5 +27,14 @@ describe('exportTxt', () => {
 
   it('returns an empty string when there are no mods', () => {
     expect(exportTxt([])).toBe('')
+  })
+
+  it('excludes disabled mods', () => {
+    const mods = [
+      makeMod({ id: '1', name: 'SkyUI', position: 0 }),
+      makeMod({ id: '2', name: 'Disabled Mod', position: 1, disabled: true }),
+    ]
+
+    expect(exportTxt(mods)).toBe('SkyUI\n')
   })
 })

@@ -70,7 +70,7 @@ function ModCard({ mod, category }: ModCardProps) {
       className={`flex items-stretch rounded-xl border ${
         isDragging
           ? 'relative z-10 border-neutral-600 bg-neutral-800 opacity-80 shadow-xl'
-          : 'border-neutral-800 bg-neutral-900'
+          : `border-neutral-800 bg-neutral-900 ${mod.disabled ? 'disabled-card' : ''}`
       }`}
     >
       <button
@@ -94,9 +94,18 @@ function ModCard({ mod, category }: ModCardProps) {
         >
           <span className="flex min-w-0 items-center gap-2">
             <ChevronIcon expanded={isExpanded} />
-            <span className="truncate text-base font-medium text-neutral-100">
+            <span
+              className={`truncate text-base font-medium text-neutral-100 ${
+                mod.disabled ? 'italic' : ''
+              }`}
+            >
               {mod.name}
             </span>
+            {mod.disabled && (
+              <span className="shrink-0 text-xs text-neutral-500">
+                disabled
+              </span>
+            )}
           </span>
           <CategoryBadge category={category} />
         </button>

@@ -42,6 +42,19 @@
 }
 
 /*
+ * Cartouche de mod désactivé : 50% d'opacité sur fond sombre, 60% sur fond
+ * clair où une opacité plus faible rend le texte illisible.
+ */
+.disabled-card {
+  opacity: 0.5;
+}
+
+[data-theme='aurore'] .disabled-card,
+[data-theme='parchemin'] .disabled-card {
+  opacity: 0.6;
+}
+
+/*
  * Thèmes de couleurs. Nordique (sombre, par défaut) ne redéfinit que
  * l'accent : sa palette neutre est celle de Tailwind. Impérial garde les
  * mêmes paliers de luminosité que Tailwind (donc les mêmes ratios de

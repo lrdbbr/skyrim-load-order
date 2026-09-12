@@ -92,4 +92,23 @@ describe('ModCardDetails', () => {
 
     expect(useLoadOrderStore.getState().mods).toHaveLength(1)
   })
+
+  it('disables the mod when "Désactiver" is clicked', () => {
+    const mod = addMod()
+    render(<ModCardDetails mod={mod} />)
+
+    fireEvent.click(screen.getByRole('button', { name: /désactiver/i }))
+
+    expect(useLoadOrderStore.getState().mods[0].disabled).toBe(true)
+  })
+
+  it('re-enables an already disabled mod', () => {
+    const mod = addMod()
+    useLoadOrderStore.getState().updateMod(mod.id, { disabled: true })
+
+    render(<ModCardDetails mod={useLoadOrderStore.getState().mods[0]} />)
+    fireEvent.click(screen.getByRole('button', { name: /réactiver/i }))
+
+    expect(useLoadOrderStore.getState().mods[0].disabled).toBe(false)
+  })
 })

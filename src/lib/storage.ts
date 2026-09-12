@@ -1,4 +1,5 @@
 import { createJSONStorage, type StateStorage } from 'zustand/middleware'
+import type { LoadOrderState, Mod } from '../store/types'
 
 const STORAGE_PROBE_KEY = '__skyrim_load_order_storage_probe__'
 
@@ -65,6 +66,30 @@ const safeLocalStorage: StateStorage = {
 }
 
 export const safeJsonStorage = createJSONStorage(() => safeLocalStorage)
+
+/**
+ * Migration du schéma persisté vers `targetVersion`, appelée par Zustand au
+ * chargement si la version stockée diffère. Actuellement : ajoute `disabled`
+ * (schema v2) aux mods sauvegardés avant son introduction, sans toucher au
+ * reste des données.
+ */
+export function migrateLoadOrderState(
+  persisted: unknown,
+  targetVersion: number,
+): Pick<LoadOrderState, 'mods' | 'categories' | 'meta'> {
+  const state = (persisted ?? {}) as Partial<LoadOrderState>
+  const mods = Array.isArray(state.mods) ? (state.mods as Mod[]) : []
+  const categories = Array.isArray(state.categories) ? state.categories : []
+
+  return {
+    mods: mods.map((mod) => ({ ...mod, disabled: mod.disabled ?? false })),
+    categories,
+    meta: {
+      schemaVersion: targetVersion,
+      lastModified: state.meta?.lastModified ?? new Date().toISOString(),
+    },
+  }
+}
 
 /**
  * Lecture brute synchrone, indépendante de l'hydratation du store Zustand,

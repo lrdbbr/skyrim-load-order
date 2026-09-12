@@ -11,6 +11,7 @@ export interface Mod {
   description: string
   categoryId: string | null
   position: number
+  disabled: boolean
   createdAt: string
   updatedAt: string
 }

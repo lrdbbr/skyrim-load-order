@@ -15,6 +15,7 @@ const baseMod: Mod = {
   description: '',
   categoryId: null,
   position: 0,
+  disabled: false,
   createdAt: '2026-01-01T00:00:00.000Z',
   updatedAt: '2026-01-01T00:00:00.000Z',
 }
@@ -99,5 +100,37 @@ describe('ModCard', () => {
 
     fireEvent.click(toggle)
     expect(screen.queryByLabelText(/description/i)).not.toBeInTheDocument()
+  })
+
+  it('shows the name in italics with a "disabled" mention when the mod is disabled', () => {
+    renderModCard({ ...baseMod, disabled: true }, undefined)
+
+    expect(screen.getByText('Ordinator - Perks of Skyrim')).toHaveClass(
+      'italic',
+    )
+    expect(screen.getByText('disabled')).toBeInTheDocument()
+  })
+
+  it('does not show the "disabled" mention or italics for an enabled mod', () => {
+    renderModCard(baseMod, undefined)
+
+    expect(screen.getByText('Ordinator - Perks of Skyrim')).not.toHaveClass(
+      'italic',
+    )
+    expect(screen.queryByText('disabled')).not.toBeInTheDocument()
+  })
+
+  it('reduces the whole card opacity when the mod is disabled', () => {
+    renderModCard({ ...baseMod, disabled: true }, undefined)
+
+    const card = screen.getByText('Ordinator - Perks of Skyrim').closest('li')
+    expect(card).toHaveClass('disabled-card')
+  })
+
+  it('keeps full opacity for an enabled mod', () => {
+    renderModCard(baseMod, undefined)
+
+    const card = screen.getByText('Ordinator - Perks of Skyrim').closest('li')
+    expect(card).not.toHaveClass('disabled-card')
   })
 })

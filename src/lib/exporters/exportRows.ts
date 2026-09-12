@@ -24,7 +24,8 @@ export interface ExportRow {
 /**
  * Trie les mods par position et résout le nom/couleur de catégorie depuis
  * categoryId (jamais l'id brut), "Sans catégorie" si categoryId est null.
- * Logique commune aux trois exporteurs (txt/csv/xlsx).
+ * Les mods désactivés sont exclus. Logique commune aux trois exporteurs
+ * (txt/csv/xlsx).
  */
 export function buildExportRows(
   mods: Mod[],
@@ -34,7 +35,8 @@ export function buildExportRows(
     categories.map((category) => [category.id, category]),
   )
 
-  return [...mods]
+  return mods
+    .filter((mod) => !mod.disabled)
     .sort((a, b) => a.position - b.position)
     .map((mod) => {
       const category = mod.categoryId

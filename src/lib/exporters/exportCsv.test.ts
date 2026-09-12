@@ -9,6 +9,7 @@ function makeMod(
   return {
     description: '',
     categoryId: null,
+    disabled: false,
     createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: '2026-01-01T00:00:00.000Z',
     ...overrides,
@@ -84,5 +85,19 @@ describe('exportCsv', () => {
     })
     expect(parsed.data[0].Name).toBe('Mod, with comma')
     expect(parsed.data[0].Description).toBe('Has "quotes" inside')
+  })
+
+  it('excludes disabled mods', () => {
+    const mods = [
+      makeMod({ id: '1', name: 'SkyUI', position: 0 }),
+      makeMod({ id: '2', name: 'Disabled Mod', position: 1, disabled: true }),
+    ]
+
+    const parsed = Papa.parse<{ Name: string }>(exportCsv(mods, []), {
+      header: true,
+      skipEmptyLines: true,
+    })
+
+    expect(parsed.data.map((row) => row.Name)).toEqual(['SkyUI'])
   })
 })

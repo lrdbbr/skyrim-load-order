@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
 import type { Mod } from '../../store/types'
-import { DANGER_FILLED_BUTTON } from '../ui/buttonStyles'
+import { DANGER_FILLED_BUTTON, SECONDARY_BUTTON } from '../ui/buttonStyles'
 
 interface ModCardDetailsProps {
   mod: Mod
@@ -46,6 +46,10 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
     }
   }
 
+  const handleToggleDisabled = () => {
+    updateMod(mod.id, { disabled: !mod.disabled })
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <label className="flex flex-col gap-1.5">
@@ -77,13 +81,22 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
         </select>
       </label>
 
-      <button
-        type="button"
-        onClick={handleDelete}
-        className={`self-start ${DANGER_FILLED_BUTTON}`}
-      >
-        Supprimer
-      </button>
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={handleToggleDisabled}
+          className={SECONDARY_BUTTON}
+        >
+          {mod.disabled ? 'Réactiver' : 'Désactiver'}
+        </button>
+        <button
+          type="button"
+          onClick={handleDelete}
+          className={DANGER_FILLED_BUTTON}
+        >
+          Supprimer
+        </button>
+      </div>
     </div>
   )
 }

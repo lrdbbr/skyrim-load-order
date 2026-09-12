@@ -5,11 +5,12 @@ import type { Category, LoadOrderState, Mod } from './types'
 import {
   hasPersistedData,
   isLocalStorageAvailable,
+  migrateLoadOrderState,
   onStorageWriteError,
   safeJsonStorage,
 } from '../lib/storage'
 
-const SCHEMA_VERSION = 1
+const SCHEMA_VERSION = 2
 const STORAGE_KEY = 'skyrim-load-order:v1'
 
 export const initialLoadOrderState: LoadOrderState = {
@@ -37,7 +38,9 @@ interface LoadOrderActions {
   removeMod: (id: string) => void
   updateMod: (
     id: string,
-    changes: Partial<Pick<Mod, 'name' | 'description' | 'categoryId'>>,
+    changes: Partial<
+      Pick<Mod, 'name' | 'description' | 'categoryId' | 'disabled'>
+    >,
   ) => void
   reorderMods: (newOrder: string[]) => void
   addCategory: (name: string, color: string) => void
@@ -78,6 +81,7 @@ export const useLoadOrderStore = create<LoadOrderStore>()(
             description: '',
             categoryId: null,
             position: nextPosition,
+            disabled: false,
             createdAt: now,
             updatedAt: now,
           }
@@ -159,6 +163,8 @@ export const useLoadOrderStore = create<LoadOrderStore>()(
     {
       name: STORAGE_KEY,
       storage: safeJsonStorage,
+      version: SCHEMA_VERSION,
+      migrate: (persisted) => migrateLoadOrderState(persisted, SCHEMA_VERSION),
       partialize: (state) => ({
         mods: state.mods,
         categories: state.categories,
