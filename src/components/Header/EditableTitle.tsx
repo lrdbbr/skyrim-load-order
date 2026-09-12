@@ -1,64 +1,24 @@
-import {
-  useRef,
-  useState,
-  type FormEvent,
-  type KeyboardEvent,
-} from 'react'
+import type { FormEvent } from 'react'
 import { useTitleStore } from '../../store/titleStore'
 import { ICON_BUTTON } from '../ui/buttonStyles'
-
-function PencilIcon() {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      aria-hidden="true"
-      className="h-4 w-4"
-    >
-      <path d="M13.586 3.586a2 2 0 1 1 2.828 2.828l-.793.793-2.828-2.828.793-.793ZM11.379 5.793 3 14.172V17h2.828l8.38-8.379-2.83-2.828Z" />
-    </svg>
-  )
-}
+import { PencilIcon } from '../ui/icons'
+import { useInlineEdit } from '../../hooks/useInlineEdit'
 
 function EditableTitle() {
   const title = useTitleStore((state) => state.title)
   const setTitle = useTitleStore((state) => state.setTitle)
-  const [isEditing, setIsEditing] = useState(false)
-  const [draft, setDraft] = useState(title)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const startEditing = () => {
-    setDraft(title)
-    setIsEditing(true)
-  }
-
-  const commit = () => {
-    setTitle(draft)
-    setIsEditing(false)
-  }
-
-  const cancel = () => {
-    setDraft(title)
-    setIsEditing(false)
-  }
+  const { isEditing, draft, setDraft, start, commit, handleKeyDown } =
+    useInlineEdit({ value: title, onCommit: setTitle })
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     commit()
   }
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Escape') {
-      event.stopPropagation()
-      cancel()
-    }
-  }
-
   if (isEditing) {
     return (
       <form onSubmit={handleSubmit} className="min-w-0 flex-1">
         <input
-          ref={inputRef}
           autoFocus
           type="text"
           value={draft}
@@ -80,7 +40,7 @@ function EditableTitle() {
       </h1>
       <button
         type="button"
-        onClick={startEditing}
+        onClick={start}
         aria-label="Modifier le titre"
         className={ICON_BUTTON}
       >

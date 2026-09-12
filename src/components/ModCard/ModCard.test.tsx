@@ -39,6 +39,12 @@ function renderModCard(mod: Mod, category: Category | undefined) {
   )
 }
 
+/** Ajoute un vrai mod au store, pour les tests qui vérifient une écriture. */
+function addMod(name = 'Ordinator - Perks of Skyrim'): Mod {
+  useLoadOrderStore.getState().addMod(name)
+  return useLoadOrderStore.getState().mods[0]
+}
+
 beforeEach(() => {
   useLoadOrderStore.setState(structuredClone(initialLoadOrderState))
   window.localStorage.clear()
@@ -132,5 +138,87 @@ describe('ModCard', () => {
 
     const card = screen.getByText('Ordinator - Perks of Skyrim').closest('li')
     expect(card).not.toHaveClass('disabled-card')
+  })
+
+  it('shows an editable input with the current name when the pencil button is clicked', () => {
+    const mod = addMod()
+    renderModCard(mod, undefined)
+
+    fireEvent.click(
+      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+    )
+
+    expect(screen.getByRole('textbox', { name: `Nom de ${mod.name}` })).toHaveValue(
+      mod.name,
+    )
+  })
+
+  it('saves the new name on Enter', () => {
+    const mod = addMod()
+    renderModCard(mod, undefined)
+
+    fireEvent.click(
+      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+    )
+    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    fireEvent.change(input, { target: { value: 'SkyUI Renamed' } })
+    fireEvent.submit(input.closest('form') as HTMLFormElement)
+
+    expect(useLoadOrderStore.getState().mods[0].name).toBe('SkyUI Renamed')
+  })
+
+  it('discards the edit on Escape', () => {
+    const mod = addMod()
+    renderModCard(mod, undefined)
+
+    fireEvent.click(
+      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+    )
+    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    fireEvent.change(input, { target: { value: 'Abandoned edit' } })
+    fireEvent.keyDown(input, { key: 'Escape' })
+
+    expect(useLoadOrderStore.getState().mods[0].name).toBe(mod.name)
+    expect(screen.getByText(mod.name)).toBeInTheDocument()
+  })
+
+  it('falls back to the previous name when saving an empty value', () => {
+    const mod = addMod()
+    renderModCard(mod, undefined)
+
+    fireEvent.click(
+      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+    )
+    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    fireEvent.change(input, { target: { value: '   ' } })
+    fireEvent.submit(input.closest('form') as HTMLFormElement)
+
+    expect(useLoadOrderStore.getState().mods[0].name).toBe(mod.name)
+  })
+
+  it('does not toggle the details section when clicking the pencil button', () => {
+    renderModCard(baseMod, undefined)
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: `Modifier le nom de ${baseMod.name}`,
+      }),
+    )
+
+    expect(screen.getByRole('button', { expanded: false })).toBeInTheDocument()
+  })
+
+  it('does not toggle the details section while typing in the name field (e.g. a space)', () => {
+    const mod = addMod()
+    renderModCard(mod, undefined)
+
+    fireEvent.click(
+      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+    )
+    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    fireEvent.keyDown(input, { key: ' ' })
+    fireEvent.keyDown(input, { key: 'Enter' })
+
+    expect(screen.getByRole('button', { expanded: false })).toBeInTheDocument()
   })
 })
