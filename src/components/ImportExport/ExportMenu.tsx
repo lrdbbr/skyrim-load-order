@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { exportCsv } from '../../lib/exporters/exportCsv'
 import { exportTxt } from '../../lib/exporters/exportTxt'
 import { exportXlsx } from '../../lib/exporters/exportXlsx'
+import { toFileNameSlug } from '../../lib/fileNameSlug'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
+import { useTitleStore } from '../../store/titleStore'
 import { SECONDARY_BUTTON } from '../ui/buttonStyles'
 
 type ExportFormat = 'txt' | 'csv' | 'xlsx'
@@ -31,6 +33,7 @@ function downloadBlob(blob: Blob, fileName: string) {
 function ExportMenu() {
   const mods = useLoadOrderStore((state) => state.mods)
   const categories = useLoadOrderStore((state) => state.categories)
+  const title = useTitleStore((state) => state.title)
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -43,7 +46,7 @@ function ExportMenu() {
   }, [isOpen])
 
   const handleExport = async (format: ExportFormat) => {
-    const fileName = `skyrim-load-order-${todayStamp()}.${format}`
+    const fileName = `${toFileNameSlug(title)}-${todayStamp()}.${format}`
     const content =
       format === 'txt'
         ? exportTxt(mods)

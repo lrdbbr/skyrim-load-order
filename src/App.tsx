@@ -1,3 +1,4 @@
+import EditableTitle from './components/Header/EditableTitle'
 import ModList from './components/ModList/ModList'
 import Toolbar from './components/Toolbar/Toolbar'
 import SessionRestoredNotice from './components/Toolbar/SessionRestoredNotice'
@@ -15,9 +16,7 @@ function App() {
             alt=""
             className="header-logo h-10 w-auto shrink-0 sm:h-12"
           />
-          <h1 className="text-2xl font-semibold sm:text-3xl">
-            Skyrim Load Order
-          </h1>
+          <EditableTitle />
         </div>
 
         <SessionRestoredNotice />
