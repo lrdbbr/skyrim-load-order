@@ -6,6 +6,7 @@ import { useLoadOrderStore } from '../../store/loadOrderStore'
 import { DANGER_BUTTON, PRIMARY_BUTTON, SECONDARY_BUTTON } from '../ui/buttonStyles'
 import SaveIndicator from './SaveIndicator'
 import ResetConfirmModal from './ResetConfirmModal'
+import ThemeSwitcher from './ThemeSwitcher'
 
 function Toolbar() {
   const addMod = useLoadOrderStore((state) => state.addMod)
@@ -57,6 +58,7 @@ function Toolbar() {
         </button>
         <ImportButton />
         <ExportMenu />
+        <ThemeSwitcher />
         <button
           type="button"
           onClick={() => setIsResetModalOpen(true)}
@@ -81,7 +83,7 @@ function Toolbar() {
             value={modName}
             onChange={(event) => setModName(event.target.value)}
             placeholder="Nom du mod"
-            className="flex-1 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none"
+            className="flex-1 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-accent focus:outline-none"
           />
           <div className="flex gap-2">
             <button

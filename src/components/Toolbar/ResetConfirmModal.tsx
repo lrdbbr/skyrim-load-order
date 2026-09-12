@@ -46,7 +46,7 @@ function ResetConfirmModal({ onClose }: ResetConfirmModalProps) {
         className="flex w-full flex-col gap-4 rounded-t-2xl bg-neutral-900 p-5 sm:max-w-[440px] sm:rounded-2xl"
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-red-300">
+          <h2 className="text-lg font-semibold text-danger">
             Réinitialiser le load order
           </h2>
           <button

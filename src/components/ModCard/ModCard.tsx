@@ -78,7 +78,7 @@ function ModCard({ mod, category }: ModCardProps) {
         {...attributes}
         {...listeners}
         aria-label={`Réordonner ${mod.name}`}
-        className="flex w-11 shrink-0 touch-none cursor-grab items-center justify-center rounded-l-xl text-neutral-500 hover:text-neutral-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-400 active:cursor-grabbing"
+        className="flex w-11 shrink-0 touch-none cursor-grab items-center justify-center rounded-l-xl text-neutral-500 hover:text-neutral-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent active:cursor-grabbing"
       >
         <DragHandleIcon />
       </button>
@@ -88,7 +88,7 @@ function ModCard({ mod, category }: ModCardProps) {
           type="button"
           onClick={() => setIsExpanded((expanded) => !expanded)}
           aria-expanded={isExpanded}
-          className={`flex w-full cursor-pointer items-center justify-between gap-3 rounded-tr-xl p-4 text-left transition-colors hover:bg-neutral-800/60 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-neutral-400 ${
+          className={`flex w-full cursor-pointer items-center justify-between gap-3 rounded-tr-xl p-4 text-left transition-colors hover:bg-neutral-800/60 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent ${
             isExpanded ? '' : 'rounded-br-xl'
           }`}
         >

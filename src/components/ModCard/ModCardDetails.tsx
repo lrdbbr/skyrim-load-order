@@ -57,7 +57,7 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
           onChange={handleDescriptionChange}
           rows={3}
           placeholder="Notes, compatibilité, ordre d'installation..."
-          className="w-full resize-y rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none"
+          className="w-full resize-y rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-accent focus:outline-none"
         />
       </label>
 
@@ -66,7 +66,7 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
         <select
           value={mod.categoryId ?? ''}
           onChange={handleCategoryChange}
-          className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-neutral-400 focus:outline-none"
+          className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-accent focus:outline-none"
         >
           <option value="">Sans catégorie</option>
           {categories.map((category) => (

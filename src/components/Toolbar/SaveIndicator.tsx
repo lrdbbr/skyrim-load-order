@@ -61,7 +61,7 @@ function SaveIndicator() {
       <span
         role="status"
         aria-live="polite"
-        className="text-xs font-medium text-red-400"
+        className="text-xs font-medium text-danger"
       >
         Sauvegarde impossible (stockage plein ou inaccessible)
       </span>

@@ -112,7 +112,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                     updateCategory(category.id, { name: event.target.value })
                   }
                   aria-label={`Nom de la catégorie ${category.name}`}
-                  className="min-w-0 flex-1 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-neutral-400 focus:outline-none"
+                  className="min-w-0 flex-1 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-accent focus:outline-none"
                 />
                 <button
                   type="button"
@@ -148,7 +148,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
               onChange={(event) => setNewName(event.target.value)}
               placeholder="Nom de la catégorie"
               aria-label="Nom de la nouvelle catégorie"
-              className="min-w-0 flex-1 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none"
+              className="min-w-0 flex-1 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-accent focus:outline-none"
             />
           </div>
 

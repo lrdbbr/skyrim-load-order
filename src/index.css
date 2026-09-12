@@ -1,5 +1,113 @@
 @import 'tailwindcss';
 
+/*
+ * Couleur d'accent (boutons primaires, focus, anneau de sélection), propre
+ * au thème choisi. Les valeurs par défaut ici correspondent au thème
+ * "Nordique" ; les autres thèmes les redéfinissent plus bas via
+ * [data-theme="..."]. accent-fg (texte sur fond accent) reste identique
+ * partout : chaque accent a été choisi avec un contraste WCAG AA (>= 4.5:1)
+ * suffisant contre ce texte quasi blanc.
+ */
+@theme {
+  --color-accent: #276bb9;
+  --color-accent-hover: #1e538f;
+  --color-accent-fg: #f8f7f2;
+
+  /*
+   * Texte rouge affiché directement sur le fond de page/carte (pas dans une
+   * pastille déjà rouge foncé, dont le contraste texte/fond est indépendant
+   * du thème). Par défaut identique à red-300/red-950 (thèmes sombres) ;
+   * Parchemin les redéfinit plus bas pour rester lisible sur fond clair.
+   */
+  --color-danger: var(--color-red-300);
+  --color-danger-hover-bg: var(--color-red-950);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+/*
+ * Logo du header (dragon noir sur fond transparent) : inversé en blanc sur
+ * les thèmes sombres, laissé tel quel (noir) sur les thèmes clairs où il
+ * est déjà lisible sur le fond.
+ */
+.header-logo {
+  filter: invert(1);
+}
+
+[data-theme='aurore'] .header-logo,
+[data-theme='parchemin'] .header-logo {
+  filter: none;
+}
+
+/*
+ * Thèmes de couleurs. Nordique (sombre, par défaut) ne redéfinit que
+ * l'accent : sa palette neutre est celle de Tailwind. Impérial garde les
+ * mêmes paliers de luminosité que Tailwind (donc les mêmes ratios de
+ * contraste déjà validés dans colors.test.ts) en y ajoutant une teinte
+ * discrète. Aurore et Parchemin (clairs) redéfinissent entièrement l'échelle
+ * neutre, avec des paires vérifiées manuellement (voir le script de
+ * vérification dans l'historique de commit) pour rester au-dessus de 4.5:1.
+ */
+[data-theme='imperial'] {
+  --color-accent: #986816;
+  --color-accent-hover: #6b490f;
+
+  --color-neutral-100: oklch(97% 0.015 85);
+  --color-neutral-200: oklch(92.2% 0.015 85);
+  --color-neutral-300: oklch(87% 0.015 85);
+  --color-neutral-400: oklch(70.8% 0.015 85);
+  --color-neutral-500: oklch(55.6% 0.015 85);
+  --color-neutral-600: oklch(43.9% 0.02 85);
+  --color-neutral-700: oklch(37.1% 0.02 85);
+  --color-neutral-800: oklch(26.9% 0.02 85);
+  --color-neutral-900: oklch(20.5% 0.02 85);
+  --color-neutral-950: oklch(14.5% 0.02 85);
+}
+
+[data-theme='aurore'] {
+  color-scheme: light;
+
+  --color-accent: #0e6659;
+  --color-accent-hover: #0a4f45;
+
+  --color-neutral-100: #161f26;
+  --color-neutral-200: #28323a;
+  --color-neutral-300: #3e4b53;
+  --color-neutral-400: #526169;
+  --color-neutral-500: #7c8f9a;
+  --color-neutral-600: #9db0bb;
+  --color-neutral-700: #b9c9d2;
+  --color-neutral-800: #d1dde3;
+  --color-neutral-900: #e2eaee;
+  --color-neutral-950: #eef3f5;
+
+  --color-danger: #b91c1c;
+  --color-danger-hover-bg: #f3d4d4;
+}
+
+[data-theme='parchemin'] {
+  color-scheme: light;
+
+  --color-accent: #7a4a1f;
+  --color-accent-hover: #5c3717;
+
+  --color-neutral-100: #211d12;
+  --color-neutral-200: #332e20;
+  --color-neutral-300: #4a4230;
+  --color-neutral-400: #6b6148;
+  --color-neutral-500: #8f8264;
+  --color-neutral-600: #b3a37a;
+  --color-neutral-700: #c9bc98;
+  --color-neutral-800: #ddd3b8;
+  --color-neutral-900: #ece5d2;
+  --color-neutral-950: #f5f1e6;
+
+  --color-danger: #b91c1c;
+  --color-danger-hover-bg: #f3d4d4;
+}
+
 @keyframes card-details-in {
   from {
     opacity: 0;
