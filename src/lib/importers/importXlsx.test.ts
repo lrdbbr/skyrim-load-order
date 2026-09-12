@@ -45,7 +45,7 @@ describe('importXlsx', () => {
   it('throws when the sheet has no data rows', async () => {
     const buffer = buildWorkbookBuffer([])
 
-    await expect(importXlsx(buffer)).rejects.toThrow(/vide/i)
+    await expect(importXlsx(buffer)).rejects.toThrow(/empty/i)
   })
 
   it('throws a friendly error when the file cannot be read', async () => {
@@ -53,6 +53,6 @@ describe('importXlsx', () => {
       'not a real spreadsheet file',
     ).buffer
 
-    await expect(importXlsx(garbage)).rejects.toThrow(/illisible|vide/i)
+    await expect(importXlsx(garbage)).rejects.toThrow(/unreadable|empty/i)
   })
 })

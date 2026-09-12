@@ -49,7 +49,7 @@ describe('exportXlsx', () => {
         Color: '#ff0000',
         Description: 'Overhaul',
       },
-      { Name: 'SkyUI', Category: 'Sans catégorie', Color: '', Description: '' },
+      { Name: 'SkyUI', Category: 'Uncategorized', Color: '', Description: '' },
     ])
   })
 

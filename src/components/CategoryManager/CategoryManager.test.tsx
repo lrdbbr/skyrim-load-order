@@ -23,16 +23,16 @@ describe('CategoryManager', () => {
   it('shows the empty state when there are no categories', () => {
     render(<CategoryManager onClose={() => {}} />)
 
-    expect(screen.getByText(/aucune catégorie/i)).toBeInTheDocument()
+    expect(screen.getByText(/no categories/i)).toBeInTheDocument()
   })
 
   it('creates a new category with a name and a color', () => {
     render(<CategoryManager onClose={() => {}} />)
 
-    fireEvent.change(screen.getByLabelText(/nom de la nouvelle catégorie/i), {
+    fireEvent.change(screen.getByLabelText(/name of the new category/i), {
       target: { value: 'Gameplay' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /^ajouter$/i }))
+    fireEvent.click(screen.getByRole('button', { name: /^add$/i }))
 
     const { categories } = useLoadOrderStore.getState()
     expect(categories).toHaveLength(1)
@@ -45,10 +45,10 @@ describe('CategoryManager', () => {
 
     render(<CategoryManager onClose={() => {}} />)
 
-    expect(screen.getByLabelText('Nom de la catégorie Gameplay')).toHaveValue(
+    expect(screen.getByLabelText('Name of category Gameplay')).toHaveValue(
       'Gameplay',
     )
-    expect(screen.getByLabelText('Couleur de Gameplay')).toHaveValue('#ef4444')
+    expect(screen.getByLabelText('Color for Gameplay')).toHaveValue('#ef4444')
   })
 
   it('renames an existing category', () => {
@@ -58,7 +58,7 @@ describe('CategoryManager', () => {
     render(<CategoryManager onClose={() => {}} />)
 
     fireEvent.change(
-      screen.getByLabelText(`Nom de la catégorie ${category.name}`),
+      screen.getByLabelText(`Name of category ${category.name}`),
       { target: { value: 'Gameplay overhaul' } },
     )
 
@@ -73,14 +73,14 @@ describe('CategoryManager', () => {
 
     render(<CategoryManager onClose={() => {}} />)
 
-    fireEvent.change(screen.getByLabelText(`Couleur de ${category.name}`), {
+    fireEvent.change(screen.getByLabelText(`Color for ${category.name}`), {
       target: { value: '#3b82f6' },
     })
 
     expect(useLoadOrderStore.getState().categories[0].color).toBe('#3b82f6')
   })
 
-  it('removes a category once deletion is confirmed and reverts its mods to "Sans catégorie"', () => {
+  it('removes a category once deletion is confirmed and reverts its mods to "Uncategorized"', () => {
     useLoadOrderStore.getState().addCategory('Gameplay', '#ef4444')
     const category = useLoadOrderStore.getState().categories[0]
     useLoadOrderStore.getState().addMod('Ordinator')
@@ -90,7 +90,7 @@ describe('CategoryManager', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     render(<CategoryManager onClose={() => {}} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /supprimer/i }))
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }))
 
     const state = useLoadOrderStore.getState()
     expect(state.categories).toHaveLength(0)
@@ -107,7 +107,7 @@ describe('CategoryManager', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(false)
     render(<CategoryManager onClose={() => {}} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /supprimer/i }))
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }))
 
     const state = useLoadOrderStore.getState()
     expect(state.categories).toHaveLength(1)

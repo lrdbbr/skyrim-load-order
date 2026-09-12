@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export type ThemeId = 'nordique' | 'imperial' | 'aurore' | 'parchemin'
+export type ThemeId = 'nordic' | 'imperial' | 'aurora' | 'parchment'
 
 interface ThemeInfo {
   id: ThemeId
@@ -12,32 +12,32 @@ interface ThemeInfo {
 
 export const THEMES: ThemeInfo[] = [
   {
-    id: 'nordique',
-    label: 'Nordique',
-    description: 'Sombre, bleu glacier',
+    id: 'nordic',
+    label: 'Nordic',
+    description: 'Dark, glacier blue',
     accent: '#276bb9',
   },
   {
     id: 'imperial',
-    label: 'Impérial',
-    description: 'Sombre, or bronze',
+    label: 'Imperial',
+    description: 'Dark, bronze gold',
     accent: '#986816',
   },
   {
-    id: 'aurore',
-    label: 'Aurore',
-    description: 'Clair, vert aurore',
+    id: 'aurora',
+    label: 'Aurora',
+    description: 'Light, aurora green',
     accent: '#0e6659',
   },
   {
-    id: 'parchemin',
-    label: 'Parchemin',
-    description: 'Clair, encre brune',
+    id: 'parchment',
+    label: 'Parchment',
+    description: 'Light, brown ink',
     accent: '#7a4a1f',
   },
 ]
 
-const DEFAULT_THEME: ThemeId = 'nordique'
+const DEFAULT_THEME: ThemeId = 'nordic'
 const THEME_IDS: readonly string[] = THEMES.map((info) => info.id)
 
 interface ThemeState {

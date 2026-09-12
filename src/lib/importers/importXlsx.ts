@@ -14,12 +14,12 @@ export async function importXlsx(data: ArrayBuffer): Promise<ParsedModRow[]> {
   try {
     workbook = XLSX.read(data, { type: 'array' })
   } catch {
-    throw new Error('Le fichier Excel est illisible ou corrompu.')
+    throw new Error('The Excel file is unreadable or corrupted.')
   }
 
   const firstSheetName = workbook.SheetNames[0]
   if (!firstSheetName) {
-    throw new Error('Le classeur Excel ne contient aucune feuille.')
+    throw new Error('The Excel workbook contains no sheets.')
   }
 
   const sheet = workbook.Sheets[firstSheetName]
@@ -28,7 +28,7 @@ export async function importXlsx(data: ArrayBuffer): Promise<ParsedModRow[]> {
   })
 
   if (sheetRows.length === 0) {
-    throw new Error('La feuille Excel est vide.')
+    throw new Error('The Excel sheet is empty.')
   }
 
   const headers = Object.keys(sheetRows[0])
@@ -39,7 +39,7 @@ export async function importXlsx(data: ArrayBuffer): Promise<ParsedModRow[]> {
     .filter((row): row is ParsedModRow => row !== null)
 
   if (rows.length === 0) {
-    throw new Error('Aucun mod trouvé dans le fichier Excel.')
+    throw new Error('No mods found in the Excel file.')
   }
 
   return rows

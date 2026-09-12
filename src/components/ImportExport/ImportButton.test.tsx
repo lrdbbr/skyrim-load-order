@@ -51,7 +51,7 @@ describe('ImportButton', () => {
 
     selectFile(getFileInput(), file)
     const dialog = await screen.findByRole('dialog')
-    fireEvent.click(within(dialog).getByRole('button', { name: /^importer$/i }))
+    fireEvent.click(within(dialog).getByRole('button', { name: /^import$/i }))
 
     await waitFor(() => {
       expect(useLoadOrderStore.getState().mods.map((mod) => mod.name)).toEqual([
@@ -61,15 +61,15 @@ describe('ImportButton', () => {
     })
   })
 
-  it('replaces the current list when "Remplacer" is selected', async () => {
+  it('replaces the current list when "Replace" is selected', async () => {
     useLoadOrderStore.getState().addMod('Old Mod')
     render(<ImportButton />)
     const file = new File(['New Mod'], 'mods.txt', { type: 'text/plain' })
 
     selectFile(getFileInput(), file)
     const dialog = await screen.findByRole('dialog')
-    fireEvent.click(within(dialog).getByLabelText(/remplacer/i))
-    fireEvent.click(within(dialog).getByRole('button', { name: /^importer$/i }))
+    fireEvent.click(within(dialog).getByLabelText(/replace/i))
+    fireEvent.click(within(dialog).getByRole('button', { name: /^import$/i }))
 
     await waitFor(() => {
       expect(useLoadOrderStore.getState().mods.map((mod) => mod.name)).toEqual([
@@ -86,7 +86,7 @@ describe('ImportButton', () => {
 
     selectFile(getFileInput(), file)
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(/non supporté/i)
+    expect(await screen.findByRole('alert')).toHaveTextContent(/not supported|unsupported/i)
   })
 
   it('shows an error message for an empty file', async () => {
@@ -95,6 +95,6 @@ describe('ImportButton', () => {
 
     selectFile(getFileInput(), file)
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(/vide/i)
+    expect(await screen.findByRole('alert')).toHaveTextContent(/empty/i)
   })
 })

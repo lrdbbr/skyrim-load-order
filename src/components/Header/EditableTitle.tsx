@@ -26,7 +26,7 @@ function EditableTitle() {
           onBlur={commit}
           onKeyDown={handleKeyDown}
           onFocus={(event) => event.target.select()}
-          aria-label="Titre du load order"
+          aria-label="Load order title"
           className="w-full min-w-0 rounded-lg border border-neutral-700 bg-neutral-900 px-2 py-0.5 text-2xl font-semibold text-neutral-100 focus:border-accent focus:outline-none sm:text-3xl"
         />
       </form>
@@ -41,7 +41,7 @@ function EditableTitle() {
       <button
         type="button"
         onClick={start}
-        aria-label="Modifier le titre"
+        aria-label="Edit title"
         className={ICON_BUTTON}
       >
         <PencilIcon />

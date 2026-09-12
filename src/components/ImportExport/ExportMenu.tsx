@@ -67,7 +67,7 @@ function ExportMenu() {
         aria-haspopup="menu"
         className={SECONDARY_BUTTON}
       >
-        Exporter
+        Export
       </button>
 
       {isOpen && (
@@ -78,7 +78,7 @@ function ExportMenu() {
           />
           <div
             role="menu"
-            aria-label="Formats d'export"
+            aria-label="Export formats"
             className="absolute right-0 z-50 mt-2 flex w-48 flex-col gap-1 rounded-lg border border-neutral-700 bg-neutral-900 p-2 shadow-xl"
           >
             <button
@@ -87,7 +87,7 @@ function ExportMenu() {
               onClick={() => handleExport('txt')}
               className="cursor-pointer rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
-              Exporter en .txt
+              Export as .txt
             </button>
             <button
               type="button"
@@ -95,7 +95,7 @@ function ExportMenu() {
               onClick={() => handleExport('csv')}
               className="cursor-pointer rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
-              Exporter en .csv
+              Export as .csv
             </button>
             <button
               type="button"
@@ -103,7 +103,7 @@ function ExportMenu() {
               onClick={() => handleExport('xlsx')}
               className="cursor-pointer rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
-              Exporter en .xlsx
+              Export as .xlsx
             </button>
           </div>
         </>

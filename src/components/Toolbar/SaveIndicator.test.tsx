@@ -25,36 +25,36 @@ afterEach(() => {
 })
 
 describe('SaveIndicator', () => {
-  it('does not show "Sauvegardé" right after mounting', () => {
+  it('does not show "Saved" right after mounting', () => {
     render(<SaveIndicator />)
-    expect(screen.getByText('Sauvegardé')).toHaveClass('opacity-0')
+    expect(screen.getByText('Saved')).toHaveClass('opacity-0')
     expect(screen.getByRole('status')).toHaveTextContent('')
   })
 
-  it('shows "Sauvegardé" a short while after a change, then hides it again', () => {
+  it('shows "Saved" a short while after a change, then hides it again', () => {
     vi.useFakeTimers()
     render(<SaveIndicator />)
 
     act(() => {
       useLoadOrderStore.getState().addMod('Mod A')
     })
-    expect(screen.getByText('Sauvegardé')).toHaveClass('opacity-0')
+    expect(screen.getByText('Saved')).toHaveClass('opacity-0')
 
     act(() => {
       vi.advanceTimersByTime(600)
     })
-    expect(screen.getByText('Sauvegardé')).toHaveClass('opacity-100')
+    expect(screen.getByText('Saved')).toHaveClass('opacity-100')
     // La région live (annoncée par les lecteurs d'écran) reçoit un vrai
     // changement de contenu, contrairement à l'indicateur visuel dont le
     // texte reste constant.
     expect(screen.getByRole('status')).toHaveTextContent(
-      'Modifications enregistrées automatiquement.',
+      'Changes saved automatically.',
     )
 
     act(() => {
       vi.advanceTimersByTime(2000)
     })
-    expect(screen.getByText('Sauvegardé')).toHaveClass('opacity-0')
+    expect(screen.getByText('Saved')).toHaveClass('opacity-0')
     expect(screen.getByRole('status')).toHaveTextContent('')
   })
 
@@ -74,21 +74,21 @@ describe('SaveIndicator', () => {
     act(() => {
       vi.advanceTimersByTime(300)
     })
-    expect(screen.getByText('Sauvegardé')).toHaveClass('opacity-0')
+    expect(screen.getByText('Saved')).toHaveClass('opacity-0')
 
     act(() => {
       vi.advanceTimersByTime(300)
     })
-    expect(screen.getByText('Sauvegardé')).toHaveClass('opacity-100')
+    expect(screen.getByText('Saved')).toHaveClass('opacity-100')
   })
 
   it('shows a warning instead when the storage write failed', () => {
     useLoadOrderStore.setState({ storageWriteError: true })
     render(<SaveIndicator />)
 
-    expect(screen.getByText(/sauvegarde impossible/i)).toBeInTheDocument()
+    expect(screen.getByText(/unable to save/i)).toBeInTheDocument()
     expect(screen.getByRole('status')).toHaveTextContent(
-      /sauvegarde impossible/i,
+      /unable to save/i,
     )
   })
 
@@ -96,6 +96,6 @@ describe('SaveIndicator', () => {
     useLoadOrderStore.setState({ storageAvailable: false })
     render(<SaveIndicator />)
 
-    expect(screen.getByText(/sauvegarde impossible/i)).toBeInTheDocument()
+    expect(screen.getByText(/unable to save/i)).toBeInTheDocument()
   })
 })

@@ -26,9 +26,9 @@ function normalizeColor(value: string | undefined): string | undefined {
 }
 
 /**
- * Le libellé "Sans catégorie" écrit par nos propres exports ne doit pas être
+ * Le libellé "Uncategorized" écrit par nos propres exports ne doit pas être
  * réimporté comme une vraie catégorie : sans ce garde-fou, exporter puis
- * réimporter un mod sans catégorie créerait une catégorie "Sans catégorie".
+ * réimporter un mod sans catégorie créerait une catégorie "Uncategorized".
  */
 function resolveCategoryName(row: ParsedModRow): string | undefined {
   const name = row.category?.trim()

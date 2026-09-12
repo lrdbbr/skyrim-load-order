@@ -21,7 +21,7 @@ describe('ModList', () => {
   it('shows an empty state when there are no mods', () => {
     render(<ModList />)
 
-    expect(screen.getByText(/aucun mod/i)).toBeInTheDocument()
+    expect(screen.getByText(/no mods/i)).toBeInTheDocument()
   })
 
   it('renders one ModCard per mod, sorted by position', () => {
@@ -52,12 +52,12 @@ describe('ModList', () => {
     expect(badge).toHaveStyle({ backgroundColor: '#ff0000' })
   })
 
-  it('shows "Sans catégorie" for a mod without a category', () => {
+  it('shows "Uncategorized" for a mod without a category', () => {
     useLoadOrderStore.getState().addMod('Mod A')
 
     render(<ModList />)
 
-    expect(screen.getByText('Sans catégorie')).toBeInTheDocument()
+    expect(screen.getByText('Uncategorized')).toBeInTheDocument()
   })
 })
 

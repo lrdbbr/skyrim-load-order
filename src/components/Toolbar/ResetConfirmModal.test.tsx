@@ -20,16 +20,16 @@ describe('ResetConfirmModal', () => {
     render(<ResetConfirmModal onClose={() => {}} />)
 
     const confirmButton = screen.getByRole('button', {
-      name: /tout réinitialiser/i,
+      name: /reset everything/i,
     })
     expect(confirmButton).toBeDisabled()
 
-    fireEvent.change(screen.getByLabelText(/tapez reset/i), {
+    fireEvent.change(screen.getByLabelText(/type reset/i), {
       target: { value: 'nope' },
     })
     expect(confirmButton).toBeDisabled()
 
-    fireEvent.change(screen.getByLabelText(/tapez reset/i), {
+    fireEvent.change(screen.getByLabelText(/type reset/i), {
       target: { value: 'RESET' },
     })
     expect(confirmButton).toBeEnabled()
@@ -38,12 +38,12 @@ describe('ResetConfirmModal', () => {
   it('accepts the confirmation word regardless of case', () => {
     render(<ResetConfirmModal onClose={() => {}} />)
 
-    fireEvent.change(screen.getByLabelText(/tapez reset/i), {
+    fireEvent.change(screen.getByLabelText(/type reset/i), {
       target: { value: 'reset' },
     })
 
     expect(
-      screen.getByRole('button', { name: /tout réinitialiser/i }),
+      screen.getByRole('button', { name: /reset everything/i }),
     ).toBeEnabled()
   })
 
@@ -53,10 +53,10 @@ describe('ResetConfirmModal', () => {
     const onClose = vi.fn()
 
     render(<ResetConfirmModal onClose={onClose} />)
-    fireEvent.change(screen.getByLabelText(/tapez reset/i), {
+    fireEvent.change(screen.getByLabelText(/type reset/i), {
       target: { value: 'RESET' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /tout réinitialiser/i }))
+    fireEvent.click(screen.getByRole('button', { name: /reset everything/i }))
 
     const state = useLoadOrderStore.getState()
     expect(state.mods).toHaveLength(0)
@@ -68,10 +68,10 @@ describe('ResetConfirmModal', () => {
     useLoadOrderStore.getState().addMod('Mod A')
 
     render(<ResetConfirmModal onClose={() => {}} />)
-    fireEvent.change(screen.getByLabelText(/tapez reset/i), {
+    fireEvent.change(screen.getByLabelText(/type reset/i), {
       target: { value: 'nope' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /tout réinitialiser/i }))
+    fireEvent.click(screen.getByRole('button', { name: /reset everything/i }))
 
     expect(useLoadOrderStore.getState().mods).toHaveLength(1)
   })
@@ -81,7 +81,7 @@ describe('ResetConfirmModal', () => {
     const onClose = vi.fn()
 
     render(<ResetConfirmModal onClose={onClose} />)
-    fireEvent.click(screen.getByRole('button', { name: /^annuler$/i }))
+    fireEvent.click(screen.getByRole('button', { name: /^cancel$/i }))
 
     expect(onClose).toHaveBeenCalledTimes(1)
     expect(useLoadOrderStore.getState().mods).toHaveLength(1)

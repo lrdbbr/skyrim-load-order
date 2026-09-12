@@ -113,7 +113,7 @@ function ModCard({ mod, category }: ModCardProps) {
         type="button"
         {...attributes}
         {...listeners}
-        aria-label={`Réordonner ${mod.name}`}
+        aria-label={`Reorder ${mod.name}`}
         className="flex w-11 shrink-0 touch-none cursor-grab items-center justify-center rounded-l-xl text-neutral-500 hover:text-neutral-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent active:cursor-grabbing"
       >
         <DragHandleIcon />
@@ -146,7 +146,7 @@ function ModCard({ mod, category }: ModCardProps) {
                   onBlur={commitName}
                   onKeyDown={handleNameKeyDown}
                   onFocus={(event) => event.target.select()}
-                  aria-label={`Nom de ${mod.name}`}
+                  aria-label={`Name of ${mod.name}`}
                   className="w-full min-w-0 rounded-lg border border-neutral-700 bg-neutral-950 px-2 py-0.5 text-base text-neutral-100 focus:border-accent focus:outline-none"
                 />
               </form>
@@ -165,7 +165,7 @@ function ModCard({ mod, category }: ModCardProps) {
                     event.stopPropagation()
                     startEditingName()
                   }}
-                  aria-label={`Modifier le nom de ${mod.name}`}
+                  aria-label={`Edit name of ${mod.name}`}
                   className={ICON_BUTTON}
                 >
                   <PencilIcon />

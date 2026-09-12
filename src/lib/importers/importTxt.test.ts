@@ -20,10 +20,10 @@ describe('importTxt', () => {
   })
 
   it('throws when the file is empty', () => {
-    expect(() => importTxt('')).toThrow(/vide/i)
+    expect(() => importTxt('')).toThrow(/empty/i)
   })
 
   it('throws when the file only contains blank lines', () => {
-    expect(() => importTxt('\n\n   \n')).toThrow(/vide/i)
+    expect(() => importTxt('\n\n   \n')).toThrow(/empty/i)
   })
 })

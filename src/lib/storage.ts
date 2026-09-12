@@ -50,7 +50,7 @@ const safeLocalStorage: StateStorage = {
       window.localStorage.setItem(name, value)
     } catch (error) {
       console.warn(
-        '[skyrim-load-order] Échec de la sauvegarde dans le localStorage (quota dépassé ou stockage inaccessible).',
+        '[skyrim-load-order] Failed to save to localStorage (quota exceeded or storage inaccessible).',
         error,
       )
       notifyWriteError()

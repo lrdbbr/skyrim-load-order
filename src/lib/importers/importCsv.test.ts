@@ -49,10 +49,10 @@ describe('importCsv', () => {
   })
 
   it('throws when the file is empty', () => {
-    expect(() => importCsv('')).toThrow(/vide/i)
+    expect(() => importCsv('')).toThrow(/empty/i)
   })
 
   it('throws when there is no data row', () => {
-    expect(() => importCsv('Name,Category\n')).toThrow(/aucun mod/i)
+    expect(() => importCsv('Name,Category\n')).toThrow(/no mods/i)
   })
 })

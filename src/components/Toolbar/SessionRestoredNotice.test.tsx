@@ -25,7 +25,7 @@ describe('SessionRestoredNotice', () => {
     render(<SessionRestoredNotice />)
 
     expect(
-      screen.getByText(/session précédente restaurée/i),
+      screen.getByText(/previous session restored/i),
     ).toBeInTheDocument()
   })
 
@@ -36,7 +36,7 @@ describe('SessionRestoredNotice', () => {
     render(<SessionRestoredNotice />)
 
     expect(
-      screen.queryByText(/session précédente restaurée/i),
+      screen.queryByText(/previous session restored/i),
     ).not.toBeInTheDocument()
   })
 
@@ -54,7 +54,7 @@ describe('SessionRestoredNotice', () => {
 
     render(<SessionRestoredNotice />)
     expect(
-      screen.getByText(/session précédente restaurée/i),
+      screen.getByText(/previous session restored/i),
     ).toBeInTheDocument()
 
     act(() => {
@@ -62,7 +62,7 @@ describe('SessionRestoredNotice', () => {
     })
 
     expect(
-      screen.queryByText(/session précédente restaurée/i),
+      screen.queryByText(/previous session restored/i),
     ).not.toBeInTheDocument()
   })
 })

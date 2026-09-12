@@ -45,16 +45,16 @@ describe('ModCardDetails', () => {
     )
   })
 
-  it('lists "Sans catégorie" plus every existing category in the select', () => {
+  it('lists "Uncategorized" plus every existing category in the select', () => {
     const mod = addMod()
     useLoadOrderStore.getState().addCategory('Gameplay', '#ff0000')
 
     render(<ModCardDetails mod={mod} />)
 
-    const select = screen.getByLabelText(/catégorie/i)
+    const select = screen.getByLabelText(/category/i)
     expect(select).toHaveValue('')
     expect(
-      screen.getByRole('option', { name: 'Sans catégorie' }),
+      screen.getByRole('option', { name: 'Uncategorized' }),
     ).toBeInTheDocument()
     expect(screen.getByRole('option', { name: 'Gameplay' })).toBeInTheDocument()
   })
@@ -66,7 +66,7 @@ describe('ModCardDetails', () => {
 
     render(<ModCardDetails mod={mod} />)
 
-    fireEvent.change(screen.getByLabelText(/catégorie/i), {
+    fireEvent.change(screen.getByLabelText(/category/i), {
       target: { value: category.id },
     })
 
@@ -78,7 +78,7 @@ describe('ModCardDetails', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
 
     render(<ModCardDetails mod={mod} />)
-    fireEvent.click(screen.getByRole('button', { name: /supprimer/i }))
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }))
 
     expect(useLoadOrderStore.getState().mods).toHaveLength(0)
   })
@@ -88,16 +88,16 @@ describe('ModCardDetails', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(false)
 
     render(<ModCardDetails mod={mod} />)
-    fireEvent.click(screen.getByRole('button', { name: /supprimer/i }))
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }))
 
     expect(useLoadOrderStore.getState().mods).toHaveLength(1)
   })
 
-  it('disables the mod when "Désactiver" is clicked', () => {
+  it('disables the mod when "Disable" is clicked', () => {
     const mod = addMod()
     render(<ModCardDetails mod={mod} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /désactiver/i }))
+    fireEvent.click(screen.getByRole('button', { name: /disable/i }))
 
     expect(useLoadOrderStore.getState().mods[0].disabled).toBe(true)
   })
@@ -107,7 +107,7 @@ describe('ModCardDetails', () => {
     useLoadOrderStore.getState().updateMod(mod.id, { disabled: true })
 
     render(<ModCardDetails mod={useLoadOrderStore.getState().mods[0]} />)
-    fireEvent.click(screen.getByRole('button', { name: /réactiver/i }))
+    fireEvent.click(screen.getByRole('button', { name: /enable/i }))
 
     expect(useLoadOrderStore.getState().mods[0].disabled).toBe(false)
   })

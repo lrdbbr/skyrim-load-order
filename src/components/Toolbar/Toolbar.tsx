@@ -47,14 +47,14 @@ function Toolbar() {
           onClick={() => setIsAddingMod(true)}
           className={PRIMARY_BUTTON}
         >
-          + Ajouter un mod
+          + Add mod
         </button>
         <button
           type="button"
           onClick={() => setIsCategoryManagerOpen(true)}
           className={SECONDARY_BUTTON}
         >
-          Catégories
+          Categories
         </button>
         <ImportButton />
         <ExportMenu />
@@ -64,7 +64,7 @@ function Toolbar() {
           onClick={() => setIsResetModalOpen(true)}
           className={DANGER_BUTTON}
         >
-          Réinitialiser
+          Reset
         </button>
         <span className="sm:ml-auto">
           <SaveIndicator />
@@ -82,7 +82,7 @@ function Toolbar() {
             type="text"
             value={modName}
             onChange={(event) => setModName(event.target.value)}
-            placeholder="Nom du mod"
+            placeholder="Mod name"
             className="flex-1 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-accent focus:outline-none"
           />
           <div className="flex gap-2">
@@ -90,14 +90,14 @@ function Toolbar() {
               type="submit"
               className={`flex-1 sm:flex-none ${PRIMARY_BUTTON}`}
             >
-              Ajouter
+              Add
             </button>
             <button
               type="button"
               onClick={cancelAddMod}
               className={`flex-1 sm:flex-none ${SECONDARY_BUTTON}`}
             >
-              Annuler
+              Cancel
             </button>
           </div>
         </form>

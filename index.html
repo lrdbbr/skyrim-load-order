@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -12,7 +12,7 @@
         try {
           var raw = localStorage.getItem('skyrim-load-order:theme')
           var theme = raw && JSON.parse(raw).state.theme
-          var known = ['nordique', 'imperial', 'aurore', 'parchemin']
+          var known = ['nordic', 'imperial', 'aurora', 'parchment']
           if (known.indexOf(theme) !== -1) {
             document.documentElement.dataset.theme = theme
           }

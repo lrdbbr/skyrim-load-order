@@ -57,10 +57,10 @@ describe('ModCard', () => {
     expect(screen.getByText('Ordinator - Perks of Skyrim')).toBeInTheDocument()
   })
 
-  it('shows "Sans catégorie" in gray when the mod has no category', () => {
+  it('shows "Uncategorized" in gray when the mod has no category', () => {
     renderModCard(baseMod, undefined)
 
-    const badge = screen.getByText('Sans catégorie')
+    const badge = screen.getByText('Uncategorized')
     expect(badge).toBeInTheDocument()
     expect(badge).toHaveClass('bg-neutral-700')
   })
@@ -81,7 +81,7 @@ describe('ModCard', () => {
 
     expect(
       screen.getByRole('button', {
-        name: `Réordonner ${baseMod.name}`,
+        name: `Reorder ${baseMod.name}`,
       }),
     ).toBeInTheDocument()
   })
@@ -145,10 +145,10 @@ describe('ModCard', () => {
     renderModCard(mod, undefined)
 
     fireEvent.click(
-      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+      screen.getByRole('button', { name: `Edit name of ${mod.name}` }),
     )
 
-    expect(screen.getByRole('textbox', { name: `Nom de ${mod.name}` })).toHaveValue(
+    expect(screen.getByRole('textbox', { name: `Name of ${mod.name}` })).toHaveValue(
       mod.name,
     )
   })
@@ -158,9 +158,9 @@ describe('ModCard', () => {
     renderModCard(mod, undefined)
 
     fireEvent.click(
-      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+      screen.getByRole('button', { name: `Edit name of ${mod.name}` }),
     )
-    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    const input = screen.getByRole('textbox', { name: `Name of ${mod.name}` })
     fireEvent.change(input, { target: { value: 'SkyUI Renamed' } })
     fireEvent.submit(input.closest('form') as HTMLFormElement)
 
@@ -172,9 +172,9 @@ describe('ModCard', () => {
     renderModCard(mod, undefined)
 
     fireEvent.click(
-      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+      screen.getByRole('button', { name: `Edit name of ${mod.name}` }),
     )
-    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    const input = screen.getByRole('textbox', { name: `Name of ${mod.name}` })
     fireEvent.change(input, { target: { value: 'Abandoned edit' } })
     fireEvent.keyDown(input, { key: 'Escape' })
 
@@ -187,9 +187,9 @@ describe('ModCard', () => {
     renderModCard(mod, undefined)
 
     fireEvent.click(
-      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+      screen.getByRole('button', { name: `Edit name of ${mod.name}` }),
     )
-    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    const input = screen.getByRole('textbox', { name: `Name of ${mod.name}` })
     fireEvent.change(input, { target: { value: '   ' } })
     fireEvent.submit(input.closest('form') as HTMLFormElement)
 
@@ -201,7 +201,7 @@ describe('ModCard', () => {
 
     fireEvent.click(
       screen.getByRole('button', {
-        name: `Modifier le nom de ${baseMod.name}`,
+        name: `Edit name of ${baseMod.name}`,
       }),
     )
 
@@ -213,9 +213,9 @@ describe('ModCard', () => {
     renderModCard(mod, undefined)
 
     fireEvent.click(
-      screen.getByRole('button', { name: `Modifier le nom de ${mod.name}` }),
+      screen.getByRole('button', { name: `Edit name of ${mod.name}` }),
     )
-    const input = screen.getByRole('textbox', { name: `Nom de ${mod.name}` })
+    const input = screen.getByRole('textbox', { name: `Name of ${mod.name}` })
     fireEvent.keyDown(input, { key: ' ' })
     fireEvent.keyDown(input, { key: 'Enter' })
 

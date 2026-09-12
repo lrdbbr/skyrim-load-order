@@ -63,7 +63,7 @@ function SaveIndicator() {
         aria-live="polite"
         className="text-xs font-medium text-danger"
       >
-        Sauvegarde impossible (stockage plein ou inaccessible)
+        Unable to save (storage full or inaccessible)
       </span>
     )
   }
@@ -81,7 +81,7 @@ function SaveIndicator() {
           showSaved ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        Sauvegardé
+        Saved
       </span>
       {/*
         Région live séparée, visuellement masquée : son contenu apparaît et
@@ -89,7 +89,7 @@ function SaveIndicator() {
         d'écran (poliment, sans interrompre l'utilisateur).
       */}
       <span role="status" aria-live="polite" className="sr-only">
-        {showSaved ? 'Modifications enregistrées automatiquement.' : ''}
+        {showSaved ? 'Changes saved automatically.' : ''}
       </span>
     </span>
   )

@@ -32,7 +32,7 @@ async function parseFile(file: File): Promise<ParsedModRow[]> {
       return importXlsx(await file.arrayBuffer())
     default:
       throw new Error(
-        `Format de fichier non supporté (.${extension ?? '?'}). Utilisez .txt, .csv, .xls ou .xlsx.`,
+        `Unsupported file format (.${extension ?? '?'}). Use .txt, .csv, .xls or .xlsx.`,
       )
   }
 }
@@ -68,7 +68,7 @@ function ImportButton() {
         message:
           error instanceof Error
             ? error.message
-            : 'Impossible de lire ce fichier.',
+            : 'Unable to read this file.',
       })
     }
   }
@@ -96,7 +96,7 @@ function ImportButton() {
         onClick={() => inputRef.current?.click()}
         className={SECONDARY_BUTTON}
       >
-        Importer
+        Import
       </button>
 
       {status.kind === 'error' && (
@@ -110,7 +110,7 @@ function ImportButton() {
             onClick={reset}
             className={`mt-3 ${DANGER_BUTTON}`}
           >
-            Fermer
+            Close
           </button>
         </div>
       )}
@@ -123,28 +123,23 @@ function ImportButton() {
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Confirmer l'import"
+            aria-label="Confirm import"
             onClick={(event) => event.stopPropagation()}
             className="flex w-full flex-col gap-4 rounded-t-2xl bg-neutral-900 p-5 sm:max-w-[420px] sm:rounded-2xl"
           >
             <h2 className="text-lg font-semibold text-neutral-100">
-              Importer « {status.fileName} »
+              Import "{status.fileName}"
             </h2>
             <p className="text-sm text-neutral-300">
               {summary.modsImported} mod
-              {summary.modsImported > 1 ? 's' : ''}{' '}
-              {summary.modsImported > 1
-                ? 'vont être importés'
-                : 'va être importé'}
-              , {summary.categoriesCreated} nouvelle
-              {summary.categoriesCreated > 1 ? 's' : ''} catégorie
-              {summary.categoriesCreated > 1 ? 's' : ''}{' '}
-              {summary.categoriesCreated > 1 ? 'seront créées' : 'sera créée'}.
+              {summary.modsImported > 1 ? 's' : ''} will be imported,{' '}
+              {summary.categoriesCreated} new categor
+              {summary.categoriesCreated > 1 ? 'ies' : 'y'} will be created.
             </p>
 
             <fieldset className="flex flex-col gap-2">
               <legend className="mb-1 text-sm font-medium text-neutral-300">
-                Que faire de la liste actuelle ?
+                What should happen to the current list?
               </legend>
               <label className="flex items-center gap-2 rounded-lg px-1 py-3 text-sm text-neutral-200">
                 <input
@@ -155,7 +150,7 @@ function ImportButton() {
                   autoFocus
                   className="h-4 w-4"
                 />
-                Ajouter à la liste actuelle
+                Add to the current list
               </label>
               <label className="flex items-center gap-2 rounded-lg px-1 py-3 text-sm text-neutral-200">
                 <input
@@ -165,20 +160,20 @@ function ImportButton() {
                   onChange={() => setMode('replace')}
                   className="h-4 w-4"
                 />
-                Remplacer la liste actuelle
+                Replace the current list
               </label>
             </fieldset>
 
             <div className="flex justify-end gap-2">
               <button type="button" onClick={reset} className={SECONDARY_BUTTON}>
-                Annuler
+                Cancel
               </button>
               <button
                 type="button"
                 onClick={confirmImport}
                 className={PRIMARY_BUTTON}
               >
-                Importer
+                Import
               </button>
             </div>
           </div>

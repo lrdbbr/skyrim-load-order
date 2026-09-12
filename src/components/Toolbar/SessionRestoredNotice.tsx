@@ -19,7 +19,7 @@ function SessionRestoredNotice() {
       role="status"
       className="rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-sm text-neutral-300"
     >
-      Session précédente restaurée
+      Previous session restored
     </div>
   )
 }

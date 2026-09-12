@@ -12,7 +12,7 @@ export function importTxt(content: string): ParsedModRow[] {
     .map((name) => ({ name }))
 
   if (rows.length === 0) {
-    throw new Error('Le fichier texte est vide.')
+    throw new Error('The text file is empty.')
   }
 
   return rows

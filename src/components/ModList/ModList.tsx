@@ -33,7 +33,7 @@ function ModList() {
   if (mods.length === 0) {
     return (
       <p className="text-center text-sm text-neutral-400">
-        Aucun mod pour l'instant.
+        No mods yet.
       </p>
     )
   }

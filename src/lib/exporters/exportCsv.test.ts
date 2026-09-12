@@ -24,7 +24,7 @@ const gameplay: Category = {
 }
 
 describe('exportCsv', () => {
-  it('resolves the category name (not the raw id) and falls back to "Sans catégorie"', () => {
+  it('resolves the category name (not the raw id) and falls back to "Uncategorized"', () => {
     const mods = [
       makeMod({
         id: '1',
@@ -46,7 +46,7 @@ describe('exportCsv', () => {
         Color: '#ff0000',
         Description: 'Overhaul',
       },
-      { Name: 'SkyUI', Category: 'Sans catégorie', Color: '', Description: '' },
+      { Name: 'SkyUI', Category: 'Uncategorized', Color: '', Description: '' },
     ])
   })
 

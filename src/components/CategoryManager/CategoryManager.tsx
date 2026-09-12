@@ -55,7 +55,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
 
   const handleDelete = (id: string, name: string) => {
     const confirmed = window.confirm(
-      `Supprimer la catégorie "${name}" ? Les mods associés repasseront en "Sans catégorie".`,
+      `Delete category "${name}"? Associated mods will be moved back to "Uncategorized".`,
     )
     if (confirmed) removeCategory(id)
   }
@@ -68,17 +68,17 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Gestion des catégories"
+        aria-label="Category management"
         onClick={(event) => event.stopPropagation()}
         className="flex max-h-[90svh] w-full flex-col gap-5 overflow-y-auto rounded-t-2xl bg-neutral-900 p-5 sm:max-w-[480px] sm:rounded-2xl"
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-neutral-100">Catégories</h2>
+          <h2 className="text-lg font-semibold text-neutral-100">Categories</h2>
           <button
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            aria-label="Fermer"
+            aria-label="Close"
             className={ICON_BUTTON}
           >
             ✕
@@ -87,7 +87,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
 
         {sortedCategories.length === 0 ? (
           <p className="text-sm text-neutral-400">
-            Aucune catégorie pour l'instant.
+            No categories yet.
           </p>
         ) : (
           <ul className="flex flex-col gap-3">
@@ -102,7 +102,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                   onChange={(event) =>
                     updateCategory(category.id, { color: event.target.value })
                   }
-                  aria-label={`Couleur de ${category.name}`}
+                  aria-label={`Color for ${category.name}`}
                   className="h-11 w-11 shrink-0 cursor-pointer rounded-full border border-neutral-700 bg-transparent p-0"
                 />
                 <input
@@ -111,7 +111,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                   onChange={(event) =>
                     updateCategory(category.id, { name: event.target.value })
                   }
-                  aria-label={`Nom de la catégorie ${category.name}`}
+                  aria-label={`Name of category ${category.name}`}
                   className="min-w-0 flex-1 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-accent focus:outline-none"
                 />
                 <button
@@ -119,7 +119,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                   onClick={() => handleDelete(category.id, category.name)}
                   className={`shrink-0 ${DANGER_FILLED_BUTTON}`}
                 >
-                  Supprimer
+                  Delete
                 </button>
               </li>
             ))}
@@ -131,7 +131,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
           className="flex flex-col gap-3 border-t border-neutral-800 pt-4"
         >
           <span className="text-sm font-medium text-neutral-300">
-            Nouvelle catégorie
+            New category
           </span>
 
           <div className="flex gap-2">
@@ -139,15 +139,15 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
               type="color"
               value={newColor}
               onChange={(event) => setNewColor(event.target.value)}
-              aria-label="Couleur de la nouvelle catégorie"
+              aria-label="Color for the new category"
               className="h-11 w-11 shrink-0 cursor-pointer rounded-full border border-neutral-700 bg-transparent p-0"
             />
             <input
               type="text"
               value={newName}
               onChange={(event) => setNewName(event.target.value)}
-              placeholder="Nom de la catégorie"
-              aria-label="Nom de la nouvelle catégorie"
+              placeholder="Category name"
+              aria-label="Name of the new category"
               className="min-w-0 flex-1 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-accent focus:outline-none"
             />
           </div>
@@ -158,7 +158,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                 key={color}
                 type="button"
                 onClick={() => setNewColor(color)}
-                aria-label={`Choisir la couleur ${color}`}
+                aria-label={`Choose color ${color}`}
                 aria-pressed={newColor === color}
                 style={{ backgroundColor: color }}
                 className={`h-11 w-11 shrink-0 cursor-pointer rounded-full border-2 transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-100 ${
@@ -174,13 +174,13 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
             <CategoryBadge
               category={{
                 id: 'preview',
-                name: newName || 'Aperçu',
+                name: newName || 'Preview',
                 color: newColor,
                 order: 0,
               }}
             />
             <button type="submit" className={`shrink-0 ${PRIMARY_BUTTON}`}>
-              Ajouter
+              Add
             </button>
           </div>
         </form>

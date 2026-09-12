@@ -3,7 +3,7 @@
 /*
  * Couleur d'accent (boutons primaires, focus, anneau de sélection), propre
  * au thème choisi. Les valeurs par défaut ici correspondent au thème
- * "Nordique" ; les autres thèmes les redéfinissent plus bas via
+ * "Nordic" ; les autres thèmes les redéfinissent plus bas via
  * [data-theme="..."]. accent-fg (texte sur fond accent) reste identique
  * partout : chaque accent a été choisi avec un contraste WCAG AA (>= 4.5:1)
  * suffisant contre ce texte quasi blanc.
@@ -36,8 +36,8 @@
   filter: invert(1);
 }
 
-[data-theme='aurore'] .header-logo,
-[data-theme='parchemin'] .header-logo {
+[data-theme='aurora'] .header-logo,
+[data-theme='parchment'] .header-logo {
   filter: none;
 }
 
@@ -49,17 +49,17 @@
   opacity: 0.5;
 }
 
-[data-theme='aurore'] .disabled-card,
-[data-theme='parchemin'] .disabled-card {
+[data-theme='aurora'] .disabled-card,
+[data-theme='parchment'] .disabled-card {
   opacity: 0.6;
 }
 
 /*
- * Thèmes de couleurs. Nordique (sombre, par défaut) ne redéfinit que
- * l'accent : sa palette neutre est celle de Tailwind. Impérial garde les
+ * Thèmes de couleurs. Nordic (sombre, par défaut) ne redéfinit que
+ * l'accent : sa palette neutre est celle de Tailwind. Imperial garde les
  * mêmes paliers de luminosité que Tailwind (donc les mêmes ratios de
  * contraste déjà validés dans colors.test.ts) en y ajoutant une teinte
- * discrète. Aurore et Parchemin (clairs) redéfinissent entièrement l'échelle
+ * discrète. Aurora et Parchment (clairs) redéfinissent entièrement l'échelle
  * neutre, avec des paires vérifiées manuellement (voir le script de
  * vérification dans l'historique de commit) pour rester au-dessus de 4.5:1.
  */
@@ -79,7 +79,7 @@
   --color-neutral-950: oklch(14.5% 0.02 85);
 }
 
-[data-theme='aurore'] {
+[data-theme='aurora'] {
   color-scheme: light;
 
   --color-accent: #0e6659;
@@ -100,7 +100,7 @@
   --color-danger-hover-bg: #f3d4d4;
 }
 
-[data-theme='parchemin'] {
+[data-theme='parchment'] {
   color-scheme: light;
 
   --color-accent: #7a4a1f;

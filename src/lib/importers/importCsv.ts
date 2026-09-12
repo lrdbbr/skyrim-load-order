@@ -9,7 +9,7 @@ import type { ParsedModRow } from './types'
  */
 export function importCsv(content: string): ParsedModRow[] {
   if (!content.trim()) {
-    throw new Error('Le fichier CSV est vide.')
+    throw new Error('The CSV file is empty.')
   }
 
   const result = Papa.parse<Record<string, string>>(content, {
@@ -19,7 +19,7 @@ export function importCsv(content: string): ParsedModRow[] {
 
   const headers = result.meta.fields ?? []
   if (headers.length === 0) {
-    throw new Error('Le fichier CSV est vide ou illisible.')
+    throw new Error('The CSV file is empty or unreadable.')
   }
 
   const mapping = findColumnMapping(headers)
@@ -29,7 +29,7 @@ export function importCsv(content: string): ParsedModRow[] {
     .filter((row): row is ParsedModRow => row !== null)
 
   if (rows.length === 0) {
-    throw new Error('Aucun mod trouvé dans le fichier CSV.')
+    throw new Error('No mods found in the CSV file.')
   }
 
   return rows

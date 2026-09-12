@@ -32,7 +32,7 @@ function ThemeSwitcher() {
           className="h-3.5 w-3.5 shrink-0 rounded-full border border-neutral-600"
           style={{ backgroundColor: activeTheme?.accent }}
         />
-        Thème
+        Theme
       </button>
 
       {isOpen && (
@@ -43,7 +43,7 @@ function ThemeSwitcher() {
           />
           <div
             role="menu"
-            aria-label="Thèmes de couleurs"
+            aria-label="Color themes"
             className="absolute right-0 z-50 mt-2 flex w-56 flex-col gap-1 rounded-lg border border-neutral-700 bg-neutral-900 p-2 shadow-xl"
           >
             {THEMES.map((candidate) => (

@@ -39,7 +39,7 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
 
   const handleDelete = () => {
     const confirmed = window.confirm(
-      `Supprimer "${mod.name}" du load order ? Cette action est irréversible.`,
+      `Delete "${mod.name}" from the load order? This action is irreversible.`,
     )
     if (confirmed) {
       removeMod(mod.id)
@@ -60,19 +60,19 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
           value={description}
           onChange={handleDescriptionChange}
           rows={3}
-          placeholder="Notes, compatibilité, ordre d'installation..."
+          placeholder="Notes, compatibility, install order..."
           className="w-full resize-y rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-accent focus:outline-none"
         />
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-sm font-medium text-neutral-300">Catégorie</span>
+        <span className="text-sm font-medium text-neutral-300">Category</span>
         <select
           value={mod.categoryId ?? ''}
           onChange={handleCategoryChange}
           className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-accent focus:outline-none"
         >
-          <option value="">Sans catégorie</option>
+          <option value="">Uncategorized</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -87,14 +87,14 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
           onClick={handleToggleDisabled}
           className={SECONDARY_BUTTON}
         >
-          {mod.disabled ? 'Réactiver' : 'Désactiver'}
+          {mod.disabled ? 'Enable' : 'Disable'}
         </button>
         <button
           type="button"
           onClick={handleDelete}
           className={DANGER_FILLED_BUTTON}
         >
-          Supprimer
+          Delete
         </button>
       </div>
     </div>
