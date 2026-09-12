@@ -56,7 +56,7 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
           onChange={handleDescriptionChange}
           rows={3}
           placeholder="Notes, compatibilité, ordre d'installation..."
-          className="w-full resize-y rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-500 focus:border-neutral-400 focus:outline-none"
+          className="w-full resize-y rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none"
         />
       </label>
 
@@ -79,7 +79,7 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
       <button
         type="button"
         onClick={handleDelete}
-        className="self-start rounded-lg border border-red-900 bg-red-950 px-4 py-2.5 text-sm font-medium text-red-300"
+        className="self-start rounded-lg border border-red-900 bg-red-950 px-4 py-3 text-sm font-medium text-red-300"
       >
         Supprimer
       </button>

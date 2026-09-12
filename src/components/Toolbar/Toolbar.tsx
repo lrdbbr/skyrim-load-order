@@ -32,14 +32,14 @@ function Toolbar() {
         <button
           type="button"
           onClick={() => setIsAddingMod(true)}
-          className="rounded-lg bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-900"
+          className="rounded-lg bg-neutral-100 px-4 py-3 text-sm font-medium text-neutral-900"
         >
           + Ajouter un mod
         </button>
         <button
           type="button"
           onClick={() => setIsCategoryManagerOpen(true)}
-          className="rounded-lg border border-neutral-700 px-4 py-2.5 text-sm font-medium text-neutral-100"
+          className="rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-100"
         >
           Catégories
         </button>
@@ -48,11 +48,11 @@ function Toolbar() {
         <button
           type="button"
           onClick={() => setIsResetModalOpen(true)}
-          className="rounded-lg border border-red-900 px-4 py-2.5 text-sm font-medium text-red-300"
+          className="rounded-lg border border-red-900 px-4 py-3 text-sm font-medium text-red-300"
         >
           Réinitialiser
         </button>
-        <span className="ml-auto">
+        <span className="sm:ml-auto">
           <SaveIndicator />
         </span>
       </div>
@@ -68,19 +68,19 @@ function Toolbar() {
             value={modName}
             onChange={(event) => setModName(event.target.value)}
             placeholder="Nom du mod"
-            className="flex-1 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-500 focus:border-neutral-400 focus:outline-none"
+            className="flex-1 rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2.5 text-base text-neutral-100 placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none"
           />
           <div className="flex gap-2">
             <button
               type="submit"
-              className="flex-1 rounded-lg bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-900 sm:flex-none"
+              className="flex-1 rounded-lg bg-neutral-100 px-4 py-3 text-sm font-medium text-neutral-900 sm:flex-none"
             >
               Ajouter
             </button>
             <button
               type="button"
               onClick={cancelAddMod}
-              className="flex-1 rounded-lg border border-neutral-700 px-4 py-2.5 text-sm font-medium text-neutral-300 sm:flex-none"
+              className="flex-1 rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-300 sm:flex-none"
             >
               Annuler
             </button>

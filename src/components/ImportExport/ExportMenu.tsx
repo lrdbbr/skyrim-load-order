@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { exportCsv } from '../../lib/exporters/exportCsv'
 import { exportTxt } from '../../lib/exporters/exportTxt'
 import { exportXlsx } from '../../lib/exporters/exportXlsx'
@@ -32,6 +32,15 @@ function ExportMenu() {
   const categories = useLoadOrderStore((state) => state.categories)
   const [isOpen, setIsOpen] = useState(false)
 
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen])
+
   const handleExport = async (format: ExportFormat) => {
     const fileName = `skyrim-load-order-${todayStamp()}.${format}`
     const content =
@@ -52,7 +61,7 @@ function ExportMenu() {
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className="rounded-lg border border-neutral-700 px-4 py-2.5 text-sm font-medium text-neutral-100"
+        className="rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-100"
       >
         Exporter
       </button>
@@ -72,7 +81,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('txt')}
-              className="rounded-lg px-3 py-2.5 text-left text-sm text-neutral-100 hover:bg-neutral-800"
+              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 hover:bg-neutral-800"
             >
               Exporter en .txt
             </button>
@@ -80,7 +89,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('csv')}
-              className="rounded-lg px-3 py-2.5 text-left text-sm text-neutral-100 hover:bg-neutral-800"
+              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 hover:bg-neutral-800"
             >
               Exporter en .csv
             </button>
@@ -88,7 +97,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('xlsx')}
-              className="rounded-lg px-3 py-2.5 text-left text-sm text-neutral-100 hover:bg-neutral-800"
+              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 hover:bg-neutral-800"
             >
               Exporter en .xlsx
             </button>

@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import {
   applyImport,
   importCsv,
@@ -38,6 +38,15 @@ function ImportButton() {
   const [mode, setMode] = useState<ImportMode>('append')
 
   const reset = () => setStatus({ kind: 'idle' })
+
+  useEffect(() => {
+    if (status.kind !== 'confirm') return
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') reset()
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [status.kind])
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -80,7 +89,7 @@ function ImportButton() {
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="rounded-lg border border-neutral-700 px-4 py-2.5 text-sm font-medium text-neutral-100"
+        className="rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-100"
       >
         Importer
       </button>
@@ -94,7 +103,7 @@ function ImportButton() {
           <button
             type="button"
             onClick={reset}
-            className="mt-3 rounded-lg border border-red-800 px-3 py-2 text-xs font-medium text-red-200"
+            className="mt-3 rounded-lg border border-red-800 px-4 py-3 text-sm font-medium text-red-200"
           >
             Fermer
           </button>
@@ -132,17 +141,18 @@ function ImportButton() {
               <legend className="mb-1 text-sm font-medium text-neutral-300">
                 Que faire de la liste actuelle ?
               </legend>
-              <label className="flex items-center gap-2 text-sm text-neutral-200">
+              <label className="flex items-center gap-2 rounded-lg px-1 py-3 text-sm text-neutral-200">
                 <input
                   type="radio"
                   name="import-mode"
                   checked={mode === 'append'}
                   onChange={() => setMode('append')}
+                  autoFocus
                   className="h-4 w-4"
                 />
                 Ajouter à la liste actuelle
               </label>
-              <label className="flex items-center gap-2 text-sm text-neutral-200">
+              <label className="flex items-center gap-2 rounded-lg px-1 py-3 text-sm text-neutral-200">
                 <input
                   type="radio"
                   name="import-mode"
@@ -158,14 +168,14 @@ function ImportButton() {
               <button
                 type="button"
                 onClick={reset}
-                className="rounded-lg border border-neutral-700 px-4 py-2.5 text-sm font-medium text-neutral-300"
+                className="rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-300"
               >
                 Annuler
               </button>
               <button
                 type="button"
                 onClick={confirmImport}
-                className="rounded-lg bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-900"
+                className="rounded-lg bg-neutral-100 px-4 py-3 text-sm font-medium text-neutral-900"
               >
                 Importer
               </button>
