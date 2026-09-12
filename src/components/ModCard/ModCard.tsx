@@ -12,6 +12,8 @@ import ModCardDetails from './ModCardDetails'
 interface ModCardProps {
   mod: Mod
   category: Category | undefined
+  position: number
+  totalCount: number
 }
 
 function ChevronIcon({ expanded }: { expanded: boolean }) {
@@ -51,7 +53,7 @@ function DragHandleIcon() {
   )
 }
 
-function ModCard({ mod, category }: ModCardProps) {
+function ModCard({ mod, category, position, totalCount }: ModCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const updateMod = useLoadOrderStore((state) => state.updateMod)
   const {
@@ -126,11 +128,17 @@ function ModCard({ mod, category }: ModCardProps) {
           onClick={toggleExpanded}
           onKeyDown={handleRowKeyDown}
           aria-expanded={isExpanded}
-          className={`flex w-full cursor-pointer items-center justify-between gap-3 rounded-tr-xl p-4 text-left transition-colors hover:bg-neutral-800/60 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent ${
+          className={`flex w-full cursor-pointer items-center justify-between gap-3 rounded-tr-xl px-4 py-[5px] text-left transition-colors hover:bg-neutral-800/60 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent ${
             isExpanded ? '' : 'rounded-br-xl'
           }`}
         >
           <span className="flex min-w-0 items-center gap-2">
+            <span
+              aria-hidden="true"
+              className="shrink-0 text-xs font-medium tabular-nums text-neutral-500"
+            >
+              #{position}
+            </span>
             <ChevronIcon expanded={isExpanded} />
             {isEditingName ? (
               <form
@@ -183,9 +191,13 @@ function ModCard({ mod, category }: ModCardProps) {
 
         {isExpanded && (
           <div
-            className="animate-[card-details-in_150ms_ease-out] border-t border-neutral-800 p-4"
+            className="animate-[card-details-in_150ms_ease-out] border-t border-neutral-800 px-4 py-[5px]"
           >
-            <ModCardDetails mod={mod} />
+            <ModCardDetails
+              mod={mod}
+              position={position}
+              totalCount={totalCount}
+            />
           </div>
         )}
       </div>

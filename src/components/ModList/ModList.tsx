@@ -57,13 +57,15 @@ function ModList() {
     >
       <SortableContext items={modIds} strategy={verticalListSortingStrategy}>
         <ul className="flex flex-col gap-3">
-          {sortedMods.map((mod) => (
+          {sortedMods.map((mod, index) => (
             <ModCard
               key={mod.id}
               mod={mod}
               category={
                 mod.categoryId ? categoryById.get(mod.categoryId) : undefined
               }
+              position={index + 1}
+              totalCount={sortedMods.length}
             />
           ))}
         </ul>

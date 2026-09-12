@@ -51,6 +51,19 @@ describe('CategoryManager', () => {
     expect(screen.getByLabelText('Color for Gameplay')).toHaveValue('#ef4444')
   })
 
+  it('lists categories alphabetically, regardless of creation order', () => {
+    useLoadOrderStore.getState().addCategory('Weapons', '#ff0000')
+    useLoadOrderStore.getState().addCategory('Armor', '#00ff00')
+    useLoadOrderStore.getState().addCategory('Gameplay', '#0000ff')
+
+    render(<CategoryManager onClose={() => {}} />)
+
+    const names = screen
+      .getAllByLabelText(/^Name of category /i)
+      .map((input) => (input as HTMLInputElement).value)
+    expect(names).toEqual(['Armor', 'Gameplay', 'Weapons'])
+  })
+
   it('renames an existing category', () => {
     useLoadOrderStore.getState().addCategory('Gameplay', '#ef4444')
     const category = useLoadOrderStore.getState().categories[0]

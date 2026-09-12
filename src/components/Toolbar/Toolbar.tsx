@@ -4,6 +4,7 @@ import ExportMenu from '../ImportExport/ExportMenu'
 import ImportButton from '../ImportExport/ImportButton'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
 import { DANGER_BUTTON, PRIMARY_BUTTON, SECONDARY_BUTTON } from '../ui/buttonStyles'
+import ModCounter from './ModCounter'
 import SaveIndicator from './SaveIndicator'
 import ResetConfirmModal from './ResetConfirmModal'
 import ThemeSwitcher from './ThemeSwitcher'
@@ -66,7 +67,8 @@ function Toolbar() {
         >
           Reset
         </button>
-        <span className="sm:ml-auto">
+        <span className="flex items-center gap-3 sm:ml-auto">
+          <ModCounter />
           <SaveIndicator />
         </span>
       </div>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { CATEGORY_COLOR_PALETTE, getNextAvailableColor } from '../../lib/colors'
+import { sortCategoriesByName } from '../../lib/sortCategories'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
 import {
   DANGER_FILLED_BUTTON,
@@ -37,7 +38,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [onClose])
 
-  const sortedCategories = [...categories].sort((a, b) => a.order - b.order)
+  const sortedCategories = sortCategoriesByName(categories)
 
   const handleCreate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()

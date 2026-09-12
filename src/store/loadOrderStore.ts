@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { arrayMove } from '@dnd-kit/sortable'
 import { v4 as uuidv4 } from 'uuid'
 import type { Category, LoadOrderState, Mod } from './types'
 import {
@@ -43,6 +44,7 @@ interface LoadOrderActions {
     >,
   ) => void
   reorderMods: (newOrder: string[]) => void
+  moveModToPosition: (id: string, newPosition: number) => void
   addCategory: (name: string, color: string) => void
   updateCategory: (
     id: string,
@@ -112,6 +114,37 @@ export const useLoadOrderStore = create<LoadOrderStore>()(
               const position = positionById.get(mod.id)
               return position === undefined ? mod : { ...mod, position }
             }),
+            meta: touch(),
+          }
+        }),
+
+      /**
+       * Déplace un mod à une position 1-indexée donnée (celle affichée à
+       * l'utilisateur), en réinsérant tous les autres mods autour de lui.
+       * La position est bornée aux limites de la liste.
+       */
+      moveModToPosition: (id, newPosition) =>
+        set((state) => {
+          const sorted = [...state.mods].sort((a, b) => a.position - b.position)
+          const oldIndex = sorted.findIndex((mod) => mod.id === id)
+          if (oldIndex === -1) return state
+
+          const clampedIndex = Math.min(
+            Math.max(Math.trunc(newPosition) - 1, 0),
+            sorted.length - 1,
+          )
+          if (clampedIndex === oldIndex) return state
+
+          const reordered = arrayMove(sorted, oldIndex, clampedIndex)
+          const positionById = new Map(
+            reordered.map((mod, index) => [mod.id, index]),
+          )
+
+          return {
+            mods: state.mods.map((mod) => ({
+              ...mod,
+              position: positionById.get(mod.id) ?? mod.position,
+            })),
             meta: touch(),
           }
         }),

@@ -27,12 +27,22 @@ const gameplayCategory: Category = {
   order: 0,
 }
 
-function renderModCard(mod: Mod, category: Category | undefined) {
+function renderModCard(
+  mod: Mod,
+  category: Category | undefined,
+  options: { position?: number; totalCount?: number } = {},
+) {
+  const { position = 1, totalCount = 1 } = options
   return render(
     <DndContext>
       <SortableContext items={[mod.id]} strategy={verticalListSortingStrategy}>
         <ul>
-          <ModCard mod={mod} category={category} />
+          <ModCard
+            mod={mod}
+            category={category}
+            position={position}
+            totalCount={totalCount}
+          />
         </ul>
       </SortableContext>
     </DndContext>,
@@ -55,6 +65,12 @@ describe('ModCard', () => {
     renderModCard(baseMod, undefined)
 
     expect(screen.getByText('Ordinator - Perks of Skyrim')).toBeInTheDocument()
+  })
+
+  it('shows the mod\'s position in the load order', () => {
+    renderModCard(baseMod, undefined, { position: 3, totalCount: 12 })
+
+    expect(screen.getByText('#3')).toBeInTheDocument()
   })
 
   it('shows "Uncategorized" in gray when the mod has no category', () => {

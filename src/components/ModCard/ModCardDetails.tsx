@@ -1,21 +1,37 @@
-import { useEffect, useRef, useState, type ChangeEvent } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+  type KeyboardEvent,
+} from 'react'
+import { sortCategoriesByName } from '../../lib/sortCategories'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
 import type { Mod } from '../../store/types'
 import { DANGER_FILLED_BUTTON, SECONDARY_BUTTON } from '../ui/buttonStyles'
 
 interface ModCardDetailsProps {
   mod: Mod
+  position: number
+  totalCount: number
 }
 
 const DESCRIPTION_DEBOUNCE_MS = 300
 
-function ModCardDetails({ mod }: ModCardDetailsProps) {
+function ModCardDetails({ mod, position, totalCount }: ModCardDetailsProps) {
   const updateMod = useLoadOrderStore((state) => state.updateMod)
   const removeMod = useLoadOrderStore((state) => state.removeMod)
+  const moveModToPosition = useLoadOrderStore(
+    (state) => state.moveModToPosition,
+  )
   const categories = useLoadOrderStore((state) => state.categories)
+  const sortedCategories = sortCategoriesByName(categories)
 
   const [description, setDescription] = useState(mod.description)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const [positionDraft, setPositionDraft] = useState(String(position))
 
   useEffect(() => {
     return () => {
@@ -50,6 +66,28 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
     updateMod(mod.id, { disabled: !mod.disabled })
   }
 
+  const commitPosition = () => {
+    const parsed = parseInt(positionDraft, 10)
+    if (Number.isNaN(parsed)) {
+      setPositionDraft(String(position))
+      return
+    }
+    moveModToPosition(mod.id, parsed)
+  }
+
+  const handlePositionSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    commitPosition()
+  }
+
+  const handlePositionKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Escape') {
+      event.stopPropagation()
+      setPositionDraft(String(position))
+      event.currentTarget.blur()
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <label className="flex flex-col gap-1.5">
@@ -73,12 +111,33 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
           className="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-accent focus:outline-none"
         >
           <option value="">Uncategorized</option>
-          {categories.map((category) => (
+          {sortedCategories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>
           ))}
         </select>
+      </label>
+
+      <label className="flex flex-col gap-1.5">
+        <span className="text-sm font-medium text-neutral-300">
+          Position ({totalCount} mod{totalCount === 1 ? '' : 's'})
+        </span>
+        <form onSubmit={handlePositionSubmit}>
+          <input
+            type="number"
+            inputMode="numeric"
+            min={1}
+            max={totalCount}
+            value={positionDraft}
+            onChange={(event) => setPositionDraft(event.target.value)}
+            onBlur={commitPosition}
+            onKeyDown={handlePositionKeyDown}
+            onFocus={(event) => event.target.select()}
+            aria-label={`Position of ${mod.name}`}
+            className="w-24 rounded-lg border border-neutral-700 bg-neutral-950 px-3 py-2.5 text-base text-neutral-100 focus:border-accent focus:outline-none"
+          />
+        </form>
       </label>
 
       <div className="flex flex-wrap gap-2">

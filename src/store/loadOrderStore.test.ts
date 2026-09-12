@@ -95,6 +95,65 @@ describe('reorderMods', () => {
   })
 })
 
+describe('moveModToPosition', () => {
+  function orderedNames(): string[] {
+    return [...useLoadOrderStore.getState().mods]
+      .sort((a, b) => a.position - b.position)
+      .map((mod) => mod.name)
+  }
+
+  it('moves a mod later in the list to an earlier 1-indexed position', () => {
+    useLoadOrderStore.getState().addMod('Mod A')
+    useLoadOrderStore.getState().addMod('Mod B')
+    useLoadOrderStore.getState().addMod('Mod C')
+    const modC = useLoadOrderStore.getState().mods[2]
+
+    useLoadOrderStore.getState().moveModToPosition(modC.id, 1)
+
+    expect(orderedNames()).toEqual(['Mod C', 'Mod A', 'Mod B'])
+  })
+
+  it('moves a mod earlier in the list to a later 1-indexed position', () => {
+    useLoadOrderStore.getState().addMod('Mod A')
+    useLoadOrderStore.getState().addMod('Mod B')
+    useLoadOrderStore.getState().addMod('Mod C')
+    const modA = useLoadOrderStore.getState().mods[0]
+
+    useLoadOrderStore.getState().moveModToPosition(modA.id, 3)
+
+    expect(orderedNames()).toEqual(['Mod B', 'Mod C', 'Mod A'])
+  })
+
+  it('clamps a position beyond the list length to the last spot', () => {
+    useLoadOrderStore.getState().addMod('Mod A')
+    useLoadOrderStore.getState().addMod('Mod B')
+    const modA = useLoadOrderStore.getState().mods[0]
+
+    useLoadOrderStore.getState().moveModToPosition(modA.id, 99)
+
+    expect(orderedNames()).toEqual(['Mod B', 'Mod A'])
+  })
+
+  it('clamps a position below 1 to the first spot', () => {
+    useLoadOrderStore.getState().addMod('Mod A')
+    useLoadOrderStore.getState().addMod('Mod B')
+    const modB = useLoadOrderStore.getState().mods[1]
+
+    useLoadOrderStore.getState().moveModToPosition(modB.id, 0)
+
+    expect(orderedNames()).toEqual(['Mod B', 'Mod A'])
+  })
+
+  it('does nothing when the id does not exist', () => {
+    useLoadOrderStore.getState().addMod('Mod A')
+    useLoadOrderStore.getState().addMod('Mod B')
+
+    useLoadOrderStore.getState().moveModToPosition('unknown-id', 1)
+
+    expect(orderedNames()).toEqual(['Mod A', 'Mod B'])
+  })
+})
+
 describe('addCategory', () => {
   it('creates a category with a new id and incremented order', () => {
     useLoadOrderStore.getState().addCategory('Gameplay', '#ff0000')
