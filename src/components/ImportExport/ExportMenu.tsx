@@ -82,7 +82,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('txt')}
-              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
+              className="cursor-pointer rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
               Exporter en .txt
             </button>
@@ -90,7 +90,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('csv')}
-              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
+              className="cursor-pointer rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
               Exporter en .csv
             </button>
@@ -98,7 +98,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('xlsx')}
-              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
+              className="cursor-pointer rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
               Exporter en .xlsx
             </button>

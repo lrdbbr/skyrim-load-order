@@ -161,7 +161,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                 aria-label={`Choisir la couleur ${color}`}
                 aria-pressed={newColor === color}
                 style={{ backgroundColor: color }}
-                className={`h-11 w-11 shrink-0 rounded-full border-2 transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-100 ${
+                className={`h-11 w-11 shrink-0 cursor-pointer rounded-full border-2 transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-100 ${
                   newColor === color
                     ? 'border-neutral-100'
                     : 'border-transparent'
