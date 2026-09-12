@@ -1,5 +1,10 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
+import {
+  DANGER_SOLID_BUTTON,
+  ICON_BUTTON,
+  SECONDARY_BUTTON,
+} from '../ui/buttonStyles'
 
 interface ResetConfirmModalProps {
   onClose: () => void
@@ -48,7 +53,7 @@ function ResetConfirmModal({ onClose }: ResetConfirmModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Fermer"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-neutral-400 hover:text-neutral-100"
+            className={ICON_BUTTON}
           >
             ✕
           </button>
@@ -84,14 +89,14 @@ function ResetConfirmModal({ onClose }: ResetConfirmModalProps) {
             <button
               type="submit"
               disabled={!isConfirmed}
-              className="flex-1 rounded-lg bg-red-600 px-4 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:text-neutral-300"
+              className={`flex-1 ${DANGER_SOLID_BUTTON}`}
             >
               Tout réinitialiser
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-300"
+              className={`flex-1 ${SECONDARY_BUTTON}`}
             >
               Annuler
             </button>

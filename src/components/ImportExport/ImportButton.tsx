@@ -8,6 +8,11 @@ import {
   type ImportMode,
   type ParsedModRow,
 } from '../../lib/importers'
+import {
+  DANGER_BUTTON,
+  PRIMARY_BUTTON,
+  SECONDARY_BUTTON,
+} from '../ui/buttonStyles'
 
 type ImportStatus =
   | { kind: 'idle' }
@@ -89,7 +94,7 @@ function ImportButton() {
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-100"
+        className={SECONDARY_BUTTON}
       >
         Importer
       </button>
@@ -103,7 +108,7 @@ function ImportButton() {
           <button
             type="button"
             onClick={reset}
-            className="mt-3 rounded-lg border border-red-800 px-4 py-3 text-sm font-medium text-red-200"
+            className={`mt-3 ${DANGER_BUTTON}`}
           >
             Fermer
           </button>
@@ -165,17 +170,13 @@ function ImportButton() {
             </fieldset>
 
             <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={reset}
-                className="rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-300"
-              >
+              <button type="button" onClick={reset} className={SECONDARY_BUTTON}>
                 Annuler
               </button>
               <button
                 type="button"
                 onClick={confirmImport}
-                className="rounded-lg bg-neutral-100 px-4 py-3 text-sm font-medium text-neutral-900"
+                className={PRIMARY_BUTTON}
               >
                 Importer
               </button>

@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { CATEGORY_COLOR_PALETTE, getNextAvailableColor } from '../../lib/colors'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
+import {
+  DANGER_FILLED_BUTTON,
+  ICON_BUTTON,
+  PRIMARY_BUTTON,
+} from '../ui/buttonStyles'
 import CategoryBadge from './CategoryBadge'
 
 interface CategoryManagerProps {
@@ -74,7 +79,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
             type="button"
             onClick={onClose}
             aria-label="Fermer"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-neutral-400 hover:text-neutral-100"
+            className={ICON_BUTTON}
           >
             ✕
           </button>
@@ -112,7 +117,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                 <button
                   type="button"
                   onClick={() => handleDelete(category.id, category.name)}
-                  className="shrink-0 rounded-lg border border-red-900 bg-red-950 px-3 py-3 text-sm font-medium text-red-300"
+                  className={`shrink-0 ${DANGER_FILLED_BUTTON}`}
                 >
                   Supprimer
                 </button>
@@ -156,7 +161,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                 aria-label={`Choisir la couleur ${color}`}
                 aria-pressed={newColor === color}
                 style={{ backgroundColor: color }}
-                className={`h-11 w-11 shrink-0 rounded-full border-2 ${
+                className={`h-11 w-11 shrink-0 rounded-full border-2 transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-100 ${
                   newColor === color
                     ? 'border-neutral-100'
                     : 'border-transparent'
@@ -174,10 +179,7 @@ function CategoryManager({ onClose }: CategoryManagerProps) {
                 order: 0,
               }}
             />
-            <button
-              type="submit"
-              className="shrink-0 rounded-lg bg-neutral-100 px-4 py-3 text-sm font-medium text-neutral-900"
-            >
+            <button type="submit" className={`shrink-0 ${PRIMARY_BUTTON}`}>
               Ajouter
             </button>
           </div>

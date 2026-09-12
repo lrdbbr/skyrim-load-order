@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
 import type { Mod } from '../../store/types'
+import { DANGER_FILLED_BUTTON } from '../ui/buttonStyles'
 
 interface ModCardDetailsProps {
   mod: Mod
@@ -79,7 +80,7 @@ function ModCardDetails({ mod }: ModCardDetailsProps) {
       <button
         type="button"
         onClick={handleDelete}
-        className="self-start rounded-lg border border-red-900 bg-red-950 px-4 py-3 text-sm font-medium text-red-300"
+        className={`self-start ${DANGER_FILLED_BUTTON}`}
       >
         Supprimer
       </button>

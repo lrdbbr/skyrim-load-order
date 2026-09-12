@@ -3,6 +3,7 @@ import { exportCsv } from '../../lib/exporters/exportCsv'
 import { exportTxt } from '../../lib/exporters/exportTxt'
 import { exportXlsx } from '../../lib/exporters/exportXlsx'
 import { useLoadOrderStore } from '../../store/loadOrderStore'
+import { SECONDARY_BUTTON } from '../ui/buttonStyles'
 
 type ExportFormat = 'txt' | 'csv' | 'xlsx'
 
@@ -61,7 +62,7 @@ function ExportMenu() {
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className="rounded-lg border border-neutral-700 px-4 py-3 text-sm font-medium text-neutral-100"
+        className={SECONDARY_BUTTON}
       >
         Exporter
       </button>
@@ -81,7 +82,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('txt')}
-              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 hover:bg-neutral-800"
+              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
               Exporter en .txt
             </button>
@@ -89,7 +90,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('csv')}
-              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 hover:bg-neutral-800"
+              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
               Exporter en .csv
             </button>
@@ -97,7 +98,7 @@ function ExportMenu() {
               type="button"
               role="menuitem"
               onClick={() => handleExport('xlsx')}
-              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 hover:bg-neutral-800"
+              className="rounded-lg px-3 py-3 text-left text-sm text-neutral-100 transition-colors hover:bg-neutral-800 focus-visible:bg-neutral-800 focus-visible:outline-none"
             >
               Exporter en .xlsx
             </button>

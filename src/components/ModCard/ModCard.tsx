@@ -88,7 +88,9 @@ function ModCard({ mod, category }: ModCardProps) {
           type="button"
           onClick={() => setIsExpanded((expanded) => !expanded)}
           aria-expanded={isExpanded}
-          className="flex w-full items-center justify-between gap-3 p-4 text-left"
+          className={`flex w-full items-center justify-between gap-3 rounded-tr-xl p-4 text-left transition-colors hover:bg-neutral-800/60 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-neutral-400 ${
+            isExpanded ? '' : 'rounded-br-xl'
+          }`}
         >
           <span className="flex min-w-0 items-center gap-2">
             <ChevronIcon expanded={isExpanded} />
@@ -100,7 +102,9 @@ function ModCard({ mod, category }: ModCardProps) {
         </button>
 
         {isExpanded && (
-          <div className="border-t border-neutral-800 p-4">
+          <div
+            className="animate-[card-details-in_150ms_ease-out] border-t border-neutral-800 p-4"
+          >
             <ModCardDetails mod={mod} />
           </div>
         )}
